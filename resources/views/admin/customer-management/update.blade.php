@@ -64,7 +64,7 @@
                 <a href="#" onclick="event.preventDefault()"  class="btn-login-info-customer">Cập nhật thông tin đăng nhập</a>
                 <a href="#" onclick="event.preventDefault()"  class="btn-login-info-customer-cancle" style="display:none;">Hủy</a>
             </div>
-            @if($errors->any())
+            @if($errors->has('password') || $errors->has('cpassword'))
                 <div class="mb-3 login-info-customer-errors">
                     <label  class="form-label">Email</label>
                     <input type="email" class="form-control login-info-customer-errors @error('email') is-invalid @enderror" name="email" value="{{ $customer->email }}" disabled>

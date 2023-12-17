@@ -39,6 +39,7 @@ class JobController extends Controller
         $job = new Job();
         $job->name = $request->name;
         $job->avatar = $fileName;
+        $job->note = '';
         if(!empty($request->note)){
             $job->note = $request->note;
         }

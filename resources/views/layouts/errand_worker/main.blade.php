@@ -17,12 +17,12 @@
         <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse">
             <div class="position-sticky">
                 <div class="list-group list-group-flush list-option-dworker p-3">
-                    <a href="#" class="text-dark item-list-dworker p-3" aria-current="true">
+                    <a href="{{ route('errand_worker.dashboard') }}" class="text-dark item-list-dworker p-3" aria-current="true">
                         <i class="fa-solid fa-user fa-fw me-3" style="color: rgb(156, 156, 156);"></i><span
                             class="text-dark text-item-list-dworker">Thông tin cá nhân</span>
                             <!-- <i class="fa-solid fa-user"></i> -->
                     </a>
-                    <a href="#" class="text-dark item-list-dworker p-3 mt-3" aria-current="true">
+                    <a href="{{ route('errand_worker.job.index') }}" class="text-dark item-list-dworker p-3 mt-3" aria-current="true">
                         <i class="fas fa-tachometer-alt fa-fw me-3" style="color: rgb(156, 156, 156);"></i><span
                             class="text-dark text-item-list-dworker">Quản lý việc</span>
                     </a>
@@ -108,8 +108,9 @@
         @yield('content')
     </main>
     <!--Main layout-->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-
+    @yield('scripts')
 </body>
 </html>

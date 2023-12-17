@@ -94,7 +94,17 @@ Route::prefix('errand_worker')->name('errand_worker.')->group(function(){
     });
 
     Route::middleware(['auth:errand_worker'])->group(function(){
+        Route::view('/','errand_worker.home')->name('dashboard');
         Route::view('/dashboard','errand_worker.home')->name('dashboard');
+        // INFO
+        Route::post('/update', [ErrandWorkerController::class,'update'])->name('update');
+        // JOB
+        Route::prefix('job')->name('job.')->group(function(){
+            Route::get('/', [App\Http\Controllers\ErrandWorker\JobController::class,'index'])->name('index');
+            Route::get('/detail/{job_id}', [App\Http\Controllers\ErrandWorker\JobController::class,'detail'])->name('detail');
+            Route::post('/type_rentals/add',[App\Http\Controllers\ErrandWorker\JobController::class,'create_typeRentals'])->name('create_type_rental');
+            Route::post('/accept_job',[App\Http\Controllers\ErrandWorker\JobController::class,'accept_job'])->name('accept_job');
+        });
         Route::get('/logout',[ErrandWorkerController::class,'logout'])->name('logout');
     });
 });

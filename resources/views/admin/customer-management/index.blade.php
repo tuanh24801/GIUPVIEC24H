@@ -39,7 +39,7 @@
                         </td>
                         <td>{{ $customer->name }}</td>
                         <td>{{ $customer->email }}</td>
-                        <td>(+84) {{ $customer->phone }}</td>
+                        <td>{{ $customer->phone }}</td>
                         <td class="text-center">
                             <a href="#" class="btn btn-success"><i class="fa-solid fa-clock-rotate-left"></i></a>
                         </td>

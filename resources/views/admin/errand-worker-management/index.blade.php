@@ -41,7 +41,7 @@
                         </td>
                         <td>{{ $errand_worker->name }}</td>
                         <td>{{ $errand_worker->email }}</td>
-                        <td>(+84) {{ $errand_worker->phone }}</td>
+                        <td>{{ $errand_worker->phone }}</td>
                         <td class="text-center">
                             <a href="#" class="btn btn-primary"><i class="fa-solid fa-eye"></i></a>
                         </td>
