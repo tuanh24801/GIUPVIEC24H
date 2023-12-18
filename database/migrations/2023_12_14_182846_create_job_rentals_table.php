@@ -17,11 +17,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('job_id');
             $table->unsignedBigInteger('type_rental_id');
-            $table->float('price');
+            $table->unsignedBigInteger('errand_worker_id');
+            $table->float('cost');
             $table->string('note');
             $table->string('status')->default('1');
             $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
             $table->foreign('type_rental_id')->references('id')->on('type_rentals')->onDelete('cascade');
+            $table->foreign('errand_worker_id')->references('id')->on('errand_workers')->onDelete('cascade');
             $table->timestamps();
         });
     }

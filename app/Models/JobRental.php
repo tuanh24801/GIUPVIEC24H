@@ -12,7 +12,7 @@ class JobRental extends Model
     protected $fillable = [
         'job_id',
         'type_rental_id',
-        'price',
+        'cost',
         'note',
         'status',
     ];

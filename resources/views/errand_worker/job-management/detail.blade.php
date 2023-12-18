@@ -22,7 +22,9 @@
             </div>
         @endif
 
-        <form action="{{ route('errand_worker.job.accept_job') }}" method="post" enctype="multipart/form-data" class="w-90 p-4" style="width: 70%;margin: auto;">
+        <a href="{{ route('errand_worker.job.index') }}" class="btn btn-secondary">Quay lại</a>
+
+        <form action="{{ route('errand_worker.job.accept_job', $job->id) }}" method="post" enctype="multipart/form-data" class="w-90 p-4" style="width: 70%;margin: auto;">
             @csrf
             @method('POST')
             <div class="mb-3">
@@ -30,7 +32,6 @@
                     <div class="col-6">
                         <img src="{{ asset('storage/images/job-images/' . $job->avatar) }}" id="preview-image-before-upload"
                             style="width: 180px;" class="mb-2">
-
                     </div>
                 </div>
             </div>
@@ -46,7 +47,7 @@
                 <div class="row">
                     <div class="col-6">
                         <label class="form-label">Chọn hình thức nhận thuê</label>
-                        <select class="form-select" aria-label="Default select example">
+                        <select class="form-select @error('type_rental_id') is-invalid @enderror" aria-label="Default select example" name="type_rental_id">
                             {{-- <option selected>Hình thức thuê</option> --}}
                             @foreach ($typeRentals as $typeRental)
                                 <option value="{{ $typeRental->id }}">{{ $typeRental->name }}</option>
@@ -55,12 +56,14 @@
                         <button type="button" class="btn btn-sm btn-primary mt-2" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
                             Thêm hình thức mới
-                        </button>
+                        </button><br>
+                        @error('type_rental_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-6">
                         <label class="form-label">Giá thuê</label>
-                        <input type="number" name="price" id="" class="form-control">
+                        <input type="number" name="cost" id="" class="form-control @error('cost') is-invalid @enderror">
                         <div id="emailHelp" class="form-text"><i class="text-dark">VNĐ</i></div>
+                        @error('cost') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                 </div>
             </div>
@@ -68,9 +71,10 @@
                 <div class="row">
                     <label class="form-label">Ghi chú của bạn</label>
                     <div class="form-floating">
-                        <textarea class="form-control" name="note" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                        <textarea class="form-control @error('note') is-invalid @enderror" name="note" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
                         {{-- <label for="floatingTextarea2">Comments</label> --}}
                       </div>
+                      @error('note') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
             </div>
             <div class="mb-3">

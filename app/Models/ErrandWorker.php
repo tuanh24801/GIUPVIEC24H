@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Job;
 
 class ErrandWorker extends Authenticatable
 {
@@ -29,6 +31,11 @@ class ErrandWorker extends Authenticatable
             $query = $query->where('name','like',"%".$s ."%")->orWhere('email','like',"%".$s."%")->orWhere('phone','like',"%".$s."%");
         }
         return $query;
+    }
+
+    public function jobs(): BelongsToMany
+    {
+        return $this->belongsToMany(Job::class, 'job_rentals','errand_worker_id','job_id');
     }
 
 }
