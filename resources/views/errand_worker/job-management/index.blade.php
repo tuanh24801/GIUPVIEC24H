@@ -61,8 +61,8 @@
                                 {{-- <p class="card-text text-dark">{{ $job->note }}</p> --}}
                                 <p class="card-text text-dark">Số lần thực hiện: 10</p>
                                 <p class="card-text text-dark">Hình thức thuê: 50.000/ngày</p>
-                                <a href="" class="btn btn-sm btn-success">Hoạt động</a><br><br>
-                                <a href="{{ route('errand_worker.job.detail', $job->id) }}" class="btn btn-primary ">Tùy chỉnh</a>
+                                <a href="" class="btn btn-sm {{ $job->status == 1 ? 'btn-success' : 'btn-secondary' }}">{{ $job->status == 1 ? 'Hoạt động' : 'Đã tạm dừng' }}</a><br><br>
+                                <a href="#" class="btn btn-primary ">Tùy chỉnh</a>
                                 <a href="#" class="btn btn-outline-danger ">Hủy việc</a>
                             </div>
 

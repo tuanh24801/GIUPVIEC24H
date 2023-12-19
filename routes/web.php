@@ -102,6 +102,7 @@ Route::prefix('errand_worker')->name('errand_worker.')->group(function(){
         Route::prefix('job')->name('job.')->group(function(){
             Route::get('/', [App\Http\Controllers\ErrandWorker\JobController::class,'index'])->name('index');
             Route::view('/proposal', 'errand_worker.job-management.create')->name('add');
+            Route::post('/create',[App\Http\Controllers\ErrandWorker\JobController::class,'create'])->name('create');
             Route::get('/detail/{job_id}', [App\Http\Controllers\ErrandWorker\JobController::class,'detail'])->name('detail');
             Route::post('/type_rentals/add',[App\Http\Controllers\ErrandWorker\JobController::class,'create_typeRentals'])->name('create_type_rental');
             Route::post('/accept_job/{job_id}',[App\Http\Controllers\ErrandWorker\JobController::class,'accept_job'])->name('accept_job');

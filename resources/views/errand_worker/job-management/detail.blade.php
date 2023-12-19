@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-6">
                         <label class="form-label">Giá thuê</label>
-                        <input type="number" name="cost" id="" class="form-control @error('cost') is-invalid @enderror">
+                        <input type="number" name="cost" id="" class="form-control @error('cost') is-invalid @enderror" value="{{ old('cost') }}">
                         <div id="emailHelp" class="form-text"><i class="text-dark">VNĐ</i></div>
                         @error('cost') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
@@ -71,7 +71,7 @@
                 <div class="row">
                     <label class="form-label">Ghi chú của bạn</label>
                     <div class="form-floating">
-                        <textarea class="form-control @error('note') is-invalid @enderror" name="note" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                        <textarea class="form-control @error('note') is-invalid @enderror" name="note" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">{{ old('note') }}</textarea>
                         {{-- <label for="floatingTextarea2">Comments</label> --}}
                       </div>
                       @error('note') <span class="text-danger">{{ $message }}</span> @enderror

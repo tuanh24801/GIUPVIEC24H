@@ -106,4 +106,35 @@ class JobController extends Controller
         }
         return false;
     }
+
+    public function create(Request $request){
+        $rules = [
+            'name' => 'required',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'status' => 'required',
+        ];
+        $messages = [
+            'name.required' => 'Tên khách hàng bắt buộc phải nhập',
+            'avatar.image' => 'Vui lòng chọn đúng định dạng ảnh',
+            'avatar.mimes' => 'Vui lòng chọn ảnh có định dạng :mimes',
+            'avatar.max' => 'Kích thước file ảnh tối đa là :max mb',
+            // 'status' => 'Trạng thái buộc phải chọn',
+        ];
+        $fileName = '';
+        if(!empty($request->avatar)){
+            $fileName = time() . '.' . $request->avatar->extension();
+            $request->file('avatar')->storeAs('public/images/job-images', $fileName);
+        }
+        $request->validate($rules,$messages);
+        $job = new Job();
+        $job->name = $request->name;
+        $job->avatar = $fileName;
+        $job->note = '';
+        if(!empty($request->note)){
+            $job->note = $request->note;
+        }
+        $job->status = 0;
+        $job->save();
+        return redirect()->route('errand_worker.job.index');
+    }
 }

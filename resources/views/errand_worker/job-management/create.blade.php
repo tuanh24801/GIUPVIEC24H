@@ -13,7 +13,7 @@
         <a href="{{ route('errand_worker.job.index') }}" class="btn btn-secondary"><b>Quay lại</b></a>
     </div>
     <div class="container pt-4">
-        <form action="#" method="post" enctype="multipart/form-data" class="w-90"
+        <form action="{{ route('errand_worker.job.create') }}" method="post" enctype="multipart/form-data" class="w-90"
             style="width: 70%;margin: auto;">
             @csrf
             @method('POST')
@@ -50,7 +50,6 @@
     </div>
 </div>
 @endsection
-{{-- AIzaSyAHcnCAa_lzBc7xwUSOclugmwKVSEhDk3s --}}
 
 
 @section('scripts')
