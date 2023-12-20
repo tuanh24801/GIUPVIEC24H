@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\ErrandWorker;
 
 class Job extends Model
 {
@@ -22,5 +24,10 @@ class Job extends Model
             $query = $query->where('name','like',"%".$s ."%")->orWhere('note','like',"%".$s."%");
         }
         return $query;
+    }
+
+    public function errand_workers(): BelongsToMany
+    {
+        return $this->belongsToMany(ErrandWorker::class, 'job_rentals','job_id','errand_worker_id');
     }
 }

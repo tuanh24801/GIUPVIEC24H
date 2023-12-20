@@ -16,11 +16,12 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            // $table->float('account_balance')->default(0);
+            $table->float('account_balance')->default(0);
             $table->string('address')->nullable();
-            $table->string('phone', 10)->nullable();
+            $table->string('phone', 10);
             $table->string('avatar')->nullable();
-            $table->string('email')->unique();
+            $table->string('location')->nullable();
+            $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

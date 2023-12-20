@@ -98,6 +98,36 @@ a {
     background-color: rgb(235, 160, 107) !important;
 }
 
+.btn-item-list-seemore{
+    background-color: rgb(156, 156, 156) !important;
+}
+
+.btn-item-list-history-rental{
+    border: 1px solid #f1c40f;
+    background-color: #f1c40f;
+}
+
+
+.btn-job-history-rental{
+    color: #fcfcfc;
+    font-weight: 700;
+}
+
+.btn-item-list-history{
+    border: 1px solid #2ecc71;
+    background-color: #2ecc71;
+}
+
+.btn-job-history{
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.input_money{
+    display: flex;
+    justify-content: space-between;
+}
+
 .main-content {
     /* background-color: aquamarine; */
     padding: 20px;

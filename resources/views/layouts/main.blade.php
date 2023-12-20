@@ -28,7 +28,7 @@
             <div class="bot-head mt-3">
                 <div class="bot-head-content">
                     <div class="bot-head-logo">
-                        <a href="" class="text-white">
+                        <a href="{{ route('home') }}" class="text-white">
                             <img src="{{ asset('images/logo_viecvat.png') }}" alt="">
                         </a>
                     </div>
@@ -48,7 +48,7 @@
                                             <b>{{ Auth::guard('customer')->user()->name }}</b>
                                         </li>
                                         <li>
-                                            <b style="float: 0;">1.000vnđ</b>
+                                            <b style="float: 0;">(test)1.000vnđ</b>
                                         </li>
                                     </ul>
 
@@ -59,7 +59,7 @@
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#"><b class="text-dark">Cá nhân</b></a></li>
+                                    <li><a class="dropdown-item" href="{{ route('customer.profile') }}"><b class="text-dark">Cá nhân</b></a></li>
                                     <li><a class="dropdown-item" href="{{ route('customer.logout') }}"><b class="text-dark">Đăng xuất</b></a></li>
                                 </ul>
                             </div>
@@ -84,76 +84,35 @@
             <b class="side-bar-title">Danh mục việc vặt nổi bật</b>
             <ul class="side-bar-list-job">
                 <li class="btn-item-list-job btn-item-list-job-new"><a class="btn-job" href="">Đề xuất công
-                        việc</a>
+                        việc </a>
                 </li>
-                <li class="btn-item-list-job"><a class="btn-job" href="">Đi chợ hộ</a></li>
-                <li class="btn-item-list-job"><a class="btn-job" href="">Đi chợ hộ</a></li>
-                <li class="btn-item-list-job"><a class="btn-job" href="">Đi chợ hộ</a></li>
-                <li class="btn-item-list-job"><a class="btn-job" href="">Đi chợ hộ</a></li>
-                <li class="btn-item-list-job"><a class="btn-job" href="">Đi chợ hộ</a></li>
-                <li class="btn-item-list-job"><a class="btn-job" href="">Đi chợ hộ</a></li>
-                <li class="btn-item-list-job"><a class="btn-job" href="">Đi chợ hộ</a></li>
-                <li class="btn-item-list-job"><a class="btn-job" href="">Đi chợ hộ</a></li>
-                <li class="btn-item-list-job"><a class="btn-job" href="">Đi chợ hộ</a></li>
-                <li class="btn-item-list-job"><a class="btn-job" href="">Đi chợ hộ</a></li>
-                <li class="btn-item-list-job"><a class="btn-job" href="">Đi chợ hộ</a></li>
-                <li class="btn-item-list-job"><a class="btn-job" href="">Đi chợ hộ</a></li>
-                <li class="btn-item-list-job btn-item-list-job-new"><a class="btn-job" href="">Xem thêm</a>
+                @foreach ($jobs as $job)
+                    <li class="btn-item-list-job"><a class="btn-job" href="">{{ $job->name }}</a></li>
+                @endforeach
+                <li class="btn-item-list-job btn-item-list-seemore"><a class="btn-job" href="{{ route('job-list') }}">Xem thêm</a></li>
+
+                <li class="mt-5 btn-item-list-job btn-item-list-history input_money">
+                    <a class="btn-job-history" href="#">Nạp tiền</a>
                 </li>
+                <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Lịch sử thuê</a></li>
+                <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Đang thực hiện: 1</a></li>
+                <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Đang chờ: 1</a></li>
             </ul>
         </div>
         <div class="main-content">
-            <div class="main-cover">
+            {{-- <div class="main-cover">
                 <img src="{{ asset('images/cover_main.png') }}" class="main-cover-img" alt="">
-            </div>
-            <div class="main-top-option">
-                <div class="gender">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Giới tính</option>
-                        <option value="1">Nam</option>
-                        <option value="2">Nữ</option>
-                    </select>
-                </div>
-                <div class="gender">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Giới tính</option>
-                        <option value="1">Nam</option>
-                        <option value="2">Nữ</option>
-                    </select>
-                </div>
-                <div class="gender">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Giới tính</option>
-                        <option value="1">Nam</option>
-                        <option value="2">Nữ</option>
-                    </select>
-                </div>
-                <div class="gender">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Giới tính</option>
-                        <option value="1">Nam</option>
-                        <option value="2">Nữ</option>
-                    </select>
-                </div>
-                <div class="main-top-option-search">
-                    <input type="text" class="form-control" placeholder="Username">
-                </div>
-                <div class="main-top-option-search">
-                    <input type="text" class="form-control" placeholder="Username">
-                </div>
-                <div class="main-top-option-button-search">
-                    <a class="btn btn-primary">Search</a>
-                </div>
-            </div>
-            <div class="main-list-dworker-work">
+            </div> --}}
+            <div class="main-list-dworker-work" style="margin-top: -25px; margin-bottom: 100px;">
 
                 @yield('content')
 
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-        </script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    @yield('scripts')
 
 </body>
 

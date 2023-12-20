@@ -18,14 +18,21 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 // Auth::routes();
 
-Route::view('/','home')->name('customer.home');
-Route::view('/customer','home')->name('customer.home');
+Route::get('/', [App\Http\Controllers\Customer\HomeController::class,'index'])->name('home');
+Route::get('/customer',function(){
+    return redirect()->route('home');
+});
+// Route::get('/customer',[App\Http\Controllers\Customer\HomeController::class,'index'])->name('home');
+Route::get('/jobs',[App\Http\Controllers\Customer\HomeController::class,'job_list'])->name('job-list');
+
+
+Route::middleware(['auth:customer'])->group(function(){
+    Route::get('/job/{job_id}',[App\Http\Controllers\Customer\HomeController::class,'job_detail'])->name('job-detail');
+    Route::get('/profile',[App\Http\Controllers\Customer\CustomerController::class,'profile'])->name('customer.profile');
+});
 
 Route::prefix('customer')->name('customer.')->group(function(){
     Route::middleware(['guest:customer'])->group(function(){

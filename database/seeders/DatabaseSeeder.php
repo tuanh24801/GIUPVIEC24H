@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
+        // \App\Models\User::factory(10)->create();
         \App\Models\Admin::factory(2)->create();
-        \App\Models\Customer::factory(20)->create();
-        \App\Models\ErrandWorker::factory(20)->create();
+        \App\Models\Customer::factory(10)->create();
+        \App\Models\ErrandWorker::factory(10)->create();
 
         $jobs = ['Giao gà', 'Giao hàng', 'Đi chợ', 'Livestream', 'Thay bóng đèn'];
         for ($i=0; $i < count($jobs ); $i++) {

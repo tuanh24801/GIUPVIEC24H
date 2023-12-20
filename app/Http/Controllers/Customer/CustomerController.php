@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Job;
+
 
 class CustomerController extends Controller
 {
@@ -38,7 +40,7 @@ class CustomerController extends Controller
             'password' => 'required',
         ]);
         if(Auth::guard('customer')->attempt($request->only('email', 'password'))){
-            return redirect()->route('customer.home');
+            return redirect()->route('home');
             // return 'ddawng nhap ok';
         }else{
             return back()->with('error', 'Something went wrong');
@@ -49,9 +51,11 @@ class CustomerController extends Controller
     public function logout(Request $request){
         // dd($request->guard());
         Auth::guard('customer')->logout();
-        return redirect()->route('customer.home');
+        return redirect()->route('home');
+    }
 
-        // $request->session()->invalidate();
-        // $this->guard('')->logout();
+    public function profile(Request $request){
+        $jobs = Job::where('status', 1)->get();
+        return view('customer.profile', ['jobs' => $jobs]);
     }
 }

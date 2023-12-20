@@ -29,7 +29,7 @@ class RedirectIfAuthenticated
                 if($guard === "errand_worker"){
                     return redirect()->route('errand_worker.dashboard');
                 }
-                return redirect()->route('customer.home');
+                return redirect()->route('home');
             }
         }
 
