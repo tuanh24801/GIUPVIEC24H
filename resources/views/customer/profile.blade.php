@@ -1,4 +1,4 @@
-@extends('layouts.main', $jobs)
+@extends('layouts.main', $jobs = App\Models\Job::where('status', 1)->get())
 <style>
 label{
     font-weight: 700;
@@ -14,7 +14,7 @@ label{
             <p class="text-success fs-5">{{ session('msg') }}</p>
         </div>
     @endif
-    <form action="" method="post" enctype="multipart/form-data" class="w-90 p-4" style="width: 70%;margin: auto;">
+    <form action="{{ route('customer.update') }}" method="post" enctype="multipart/form-data" class="w-90 p-4" style="width: 70%;margin: auto;">
         @csrf
         @method('POST')
         <div class="mb-3">
@@ -50,7 +50,8 @@ label{
                 </div>
                 <div class="col-6">
                     <label  class="form-label">Số dư </label>
-                    <input type="number" class="form-control" value="{{ Auth::guard('customer')->user()->account_balance }}" disabled>
+                    <input type="text" class="form-control" value="{{ number_format(Auth::guard('customer')->user()->account_balance, 0) }} " disabled>
+                    <i class="text-dark">VNĐ</i>
                 </div>
             </div>
         </div>

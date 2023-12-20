@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->float('account_balance')->default(0);
+            $table->integer('account_balance')->default(0);
             $table->string('address')->nullable();
             $table->string('phone', 10);
             $table->string('avatar')->nullable();

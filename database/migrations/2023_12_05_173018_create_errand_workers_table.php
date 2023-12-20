@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('phone', 10);
             $table->string('avatar')->nullable();
             $table->string('identification_card', 12);
-            $table->float('account_balance')->default(0);
+            $table->integer('account_balance')->default(0);
             $table->timestamps();
         });
     }

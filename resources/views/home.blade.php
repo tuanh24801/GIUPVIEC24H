@@ -1,4 +1,4 @@
-@extends('layouts.main', $jobs)
+@extends('layouts.main', $jobs = App\Models\Job::where('status', 1)->get())
 
 @section('content')
 

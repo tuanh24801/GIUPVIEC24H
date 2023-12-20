@@ -32,6 +32,10 @@ Route::get('/jobs',[App\Http\Controllers\Customer\HomeController::class,'job_lis
 Route::middleware(['auth:customer'])->group(function(){
     Route::get('/job/{job_id}',[App\Http\Controllers\Customer\HomeController::class,'job_detail'])->name('job-detail');
     Route::get('/profile',[App\Http\Controllers\Customer\CustomerController::class,'profile'])->name('customer.profile');
+    Route::post('/profile/update',[App\Http\Controllers\Customer\CustomerController::class,'update'])->name('customer.update');
+    Route::get('/pay',[App\Http\Controllers\Customer\CustomerController::class,'pay'])->name('customer.pay');
+    Route::post('/create_payment',[App\Http\Controllers\Customer\CustomerController::class,'create_payment'])->name('customer.create_payment');
+    Route::get('/return',[App\Http\Controllers\Customer\CustomerController::class,'return'])->name('customer.return');
 });
 
 Route::prefix('customer')->name('customer.')->group(function(){
