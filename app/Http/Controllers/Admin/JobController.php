@@ -49,7 +49,41 @@ class JobController extends Controller
         // return 'ok';
     }
 
-    public function update(){
+    public function edit(Request $request, $job_id){
+        $job = Job::find($job_id);
+
+        return view('admin.job-management.update',  ['job' => $job]);
+    }
+
+    public function update(Request $request,  $job_id){
+        $job = Job::find($job_id);
+        $rules = [
+            'name' => 'required',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'required',
+            'note' => 'required',
+        ];
+        $messages = [
+            'name.required' => 'Tên khách hàng bắt buộc phải nhập',
+            'avatar.image' => 'Vui lòng chọn đúng định dạng ảnh',
+            'avatar.mimes' => 'Vui lòng chọn ảnh có định dạng :mimes',
+            'avatar.max' => 'Kích thước file ảnh tối đa là :max mb',
+            'status' => 'Trạng thái buộc phải chọn',
+            'note.required' => 'Ghi chú buộc phải nhập'
+        ];
+        $request->validate($rules,$messages);
+        $job->name = $request->name;
+        $job->note = $request->note;
+        $fileName = '';
+        if(!empty($request->avatar)){
+            $fileName = time() . '.' . $request->avatar->extension();
+            $request->file('avatar')->storeAs('public/images/job-images', $fileName);
+            $job->avatar = $fileName;
+        }
+        $job->save();
+
+        return redirect()->back()->with('msg','Cập nhật công việc thành công');
+
 
     }
 
@@ -59,6 +93,7 @@ class JobController extends Controller
         $job->save();
         return redirect()->back();
     }
+
 
     public function delete(){
         return 'delete';

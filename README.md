@@ -11,3 +11,5 @@
 
 
 ## Tuấn Anh
+
+ - https://github.com/magarrent/laravel-currency-formatter

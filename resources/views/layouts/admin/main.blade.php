@@ -41,7 +41,7 @@
                         <i class="fa-solid fa-money-bill-1 fa-fw me-3" style="color: rgb(156, 156, 156);"></i><span
                             class="text-dark text-item-list-dworker">Quản lý thuê</span>
                     </a>
-                    <a href="#" class="text-dark item-list-dworker p-3 mt-3" aria-current="true">
+                    <a href="{{ route('admin.payment.index') }}" class="text-dark item-list-dworker p-3 mt-3" aria-current="true">
                         <i class="fa-solid fa-money-bill-1 fa-fw me-3" style="color: rgb(156, 156, 156);"></i><span
                             class="text-dark text-item-list-dworker">Quản lý nạp tiền</span>
                     </a>

@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Payment;
+
 
 class Customer extends Authenticatable
 {
@@ -29,5 +34,10 @@ class Customer extends Authenticatable
             $query = $query->where('name','like',"%".$s ."%")->orWhere('email','like',"%".$s."%")->orWhere('phone','like',"%".$s."%");
         }
         return $query;
+    }
+
+    public function payments(): hasMany
+    {
+        return $this->hasMany(Payment::class, 'customer_id');
     }
 }

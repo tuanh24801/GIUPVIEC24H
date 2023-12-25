@@ -8,6 +8,7 @@ use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Job;
+use App\Models\Payment;
 use Carbon\Carbon;
 
 
@@ -206,14 +207,12 @@ class CustomerController extends Controller
     public function return(Request $request){
         $info_vnpay_return = $request->all();
         $vnp_HashSecret = "NCCKOMUNIMIBORJBFINSUIRTBYGOUMWX";
-        // $vnp_SecureHash = $request->vnp_SecureHash;
         $inputData = array();
         foreach ($info_vnpay_return as $key => $value) {
             if (substr($key, 0, 4) == "vnp_") {
                 $inputData[$key] = $value;
             }
         }
-        // dd($inputData);
 
         unset($inputData['vnp_SecureHash']);
         ksort($inputData);
@@ -230,7 +229,7 @@ class CustomerController extends Controller
 
         $secureHash_ = hash_hmac('sha512', $hashData, $vnp_HashSecret);
 
-        $amount = $request->vnp_Amount;
+        // $amount = $request->vnp_Amount;
         // $bankCode = $request->vnp_BankCode;
         // $cardType = $request->vnp_CardType;
         // $orderInfo = $request->vnp_OrderInfo;
@@ -262,7 +261,49 @@ class CustomerController extends Controller
             $status = 'danger';
             $msg = 'Lỗi chữ ký không hợp lệ';
         }
+        // dd($request->all());
 
-        return view('customer.vn_pay.return', [ 'status' =>$status, 'msg' => $msg,'amount' => $amount]);
+        $customer_id = Auth::guard('customer')->user()->id;
+
+        $amount = $request->vnp_Amount;
+        $bank_code = $request->vnp_BankCode;
+        $card_type = $request->vnp_CardType;
+        $info_payment = json_encode($request->all());
+        if ($secureHash_ == $request->vnp_SecureHash) {
+            if ($request->vnp_ResponseCode == '00') {
+                $status = 1;
+                $msg = 'Nạp tiền thành công';
+
+            } else {
+                $status = 0;
+                $msg = 'Giao dịch không thành công';
+            }
+        } else {
+            $status = -1;
+            $msg = 'Lỗi chữ ký không hợp lệ';
+        }
+
+        $payment = new Payment();
+        $payment->customer_id = $customer_id;
+        $payment->amount = $amount/100;
+        $payment->bank_code = $bank_code;
+        $payment->card_type = $card_type;
+        $payment->info_payment_vnpay = $info_payment;
+        $payment->status = $status;
+
+        $payment->save();
+
+        if($status == 1){
+            $customer = Customer::find($customer_id);
+            $customer->account_balance = $customer->account_balance+$payment->amount;
+            $customer->save();
+        }
+        return redirect()->back()->with('msg', $msg);
+    }
+
+    public function payment_history(){
+        $customer = Customer::find(Auth::guard('customer')->user()->id);
+        return view('customer.vn_pay.payment_history', ['customer' => $customer]);
+
     }
 }

@@ -14,6 +14,8 @@ label{
             <p class="text-success fs-5">{{ session('msg') }}</p>
         </div>
     @endif
+    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-secondary">Trở lại</a>
+
     <div class="table-responsive p-4">
         <form action="{{ route('customer.create_payment') }}" id="frmCreateOrder" method="post">
             @csrf
@@ -85,33 +87,4 @@ label{
 
 @endsection
 @section('scripts')
-<script type="text/javascript">
-    $(document).ready(function (e) {
-        $('#image').change(function(){
-            let reader = new FileReader();
-            reader.onload = (e) => {
-                $('#preview-image-before-upload').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-        });
-        $('.btn-login-info-customer').click(function(){
-            $('.login-info-customer').css("display", "block");
-            $('.btn-login-info-customer-cancle').css("display", "block");
-            $('.btn-login-info-customer').css("display", "none");
-            $('.login-info-customer-password').prop('disabled', false);
-            $('.login-info-customer-cpassword').prop('disabled', false);
-            $('.login-info-customer-errors').css("display", "none");
-            $('.login-info-customer-errors-password').prop('disabled', true);
-            $('.login-info-customer-errors-cpassword').prop('disabled', true);
-        });
-        $('.btn-login-info-customer-cancle').click(function(){
-            $('.login-info-customer').css("display", "none");
-            $('.btn-login-info-customer-cancle').css("display", "none");
-            $('.btn-login-info-customer').css("display", "block");
-            $('.login-info-customer-password').prop('disabled', true);
-            $('.login-info-customer-cpassword').prop('disabled', true);
-        });
-    });
-
-</script>
 @endsection

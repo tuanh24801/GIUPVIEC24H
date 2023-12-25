@@ -101,6 +101,22 @@
                     <input type="password" class="form-control login-info-customer-errors-cpassword @error('cpassword') is-invalid @enderror" name="cpassword" >
                     @error('cpassword') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
+            @elseif ($errors->has('email'))
+                <div class="mb-3 login-info-customer-errors">
+                    <label  class="form-label">Email</label>
+                    <input type="email" class="form-control login-info-customer-errors @error('email') is-invalid @enderror" name="email" value="{{ $errand_worker->email }}" disabled>
+                    @error('email') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+                <div class="mb-3 login-info-customer-errors">
+                    <label class="form-label">Mật khẩu</label>
+                    <input type="password" class="form-control login-info-customer-errors-password @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" >
+                    @error('password') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+                <div class="mb-3 login-info-customer-errors">
+                    <label class="form-label">Nhập lại mật khẩu</label>
+                    <input type="password" class="form-control login-info-customer-errors-cpassword @error('cpassword') is-invalid @enderror" name="cpassword" >
+                    @error('cpassword') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
             @endif
             <div class="mb-3 login-info-customer" style="display:none;">
                 <label  class="form-label">Email</label>

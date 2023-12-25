@@ -48,7 +48,10 @@
                                             <b>{{ Auth::guard('customer')->user()->name }}</b>
                                         </li>
                                         <li>
-                                            <b style="float: 0;">(test)1.000vnđ</b>
+                                            @php
+                                                // use Magarrent\LaravelCurrencyFormatter\Facades\Currency;
+                                            @endphp
+                                            <b style="float: 0;">{{ Magarrent\LaravelCurrencyFormatter\Facades\Currency::currency("VND")->format(Auth::guard('customer')->user()->account_balance)  }}</b>
                                         </li>
                                     </ul>
 
@@ -60,6 +63,7 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ route('customer.profile') }}"><b class="text-dark">Cá nhân</b></a></li>
+                                    <li><a class="dropdown-item" href="{{ route('customer.payment_history') }}"><b class="text-dark">Lịch sử nạp tiền</b></a></li>
                                     <li><a class="dropdown-item" href="{{ route('customer.logout') }}"><b class="text-dark">Đăng xuất</b></a></li>
                                 </ul>
                             </div>
@@ -92,9 +96,9 @@
                 <li class="btn-item-list-job btn-item-list-seemore"><a class="btn-job" href="{{ route('job-list') }}">Xem thêm</a></li>
 
                 <li class="mt-5 btn-item-list-job btn-item-list-history input_money">
-                    <a class="btn-job-history" href="#">Nạp tiền</a>
+                    <a class="btn-job-history" href="{{ route('customer.pay') }}">Nạp tiền</a>
                 </li>
-                <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Lịch sử thuê</a></li>
+                <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('customer.profile') }}">Cá nhân</a></li>
                 <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Đang thực hiện: 1</a></li>
                 <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Đang chờ: 1</a></li>
             </ul>

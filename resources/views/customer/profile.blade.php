@@ -8,13 +8,16 @@ label{
 </style>
 @section('content')
 <div class="text-dark" style="margin-bottom: 100px;">
-    <h3>Thông tin cá nhân</h3>
+    <h3  class="mt-3">Thông tin cá nhân</h3>
     @if (!empty(session('msg')))
         <div class="text-center">
             <p class="text-success fs-5">{{ session('msg') }}</p>
         </div>
     @endif
-    <form action="{{ route('customer.update') }}" method="post" enctype="multipart/form-data" class="w-90 p-4" style="width: 70%;margin: auto;">
+    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-secondary">Trở lại</a>
+
+    <div class="table-responsive p-4">
+    <form action="{{ route('customer.update') }}" method="post" enctype="multipart/form-data" >
         @csrf
         @method('POST')
         <div class="mb-3">
@@ -51,7 +54,9 @@ label{
                 <div class="col-6">
                     <label  class="form-label">Số dư </label>
                     <input type="text" class="form-control" value="{{ number_format(Auth::guard('customer')->user()->account_balance, 0) }} " disabled>
-                    <i class="text-dark">VNĐ</i>
+                    <i class="text-dark">VNĐ</i><br>
+                    <a href="{{ route('customer.pay') }}" class="btn btn-primary">Nạp tiền</a>
+                    <a href="{{ route('customer.payment_history') }}" class="btn btn-primary">Lịch sử nạp tiền</a>
                 </div>
             </div>
         </div>
@@ -89,6 +94,22 @@ label{
                 <input type="password" class="form-control login-info-customer-errors-cpassword @error('cpassword') is-invalid @enderror" name="cpassword" >
                 @error('cpassword') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
+        @elseif ($errors->has('email'))
+            <div class="mb-3 login-info-customer-errors">
+                <label  class="form-label">Email</label>
+                <input type="email" class="form-control login-info-customer-errors @error('email') is-invalid @enderror" name="email" value="{{ Auth::guard('customer')->user()->email }}" disabled>
+                @error('email') <span class="text-danger">{{ $message }}</span> @enderror
+            </div>
+            <div class="mb-3 login-info-customer-errors">
+                <label class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control login-info-customer-errors-password @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" >
+                @error('password') <span class="text-danger">{{ $message }}</span> @enderror
+            </div>
+            <div class="mb-3 login-info-customer-errors">
+                <label class="form-label">Nhập lại mật khẩu</label>
+                <input type="password" class="form-control login-info-customer-errors-cpassword @error('cpassword') is-invalid @enderror" name="cpassword" >
+                @error('cpassword') <span class="text-danger">{{ $message }}</span> @enderror
+            </div>
         @endif
         <div class="mb-3 login-info-customer" style="display:none;">
             <label  class="form-label">Email</label>
@@ -107,6 +128,7 @@ label{
         </div>
         <button type="submit" class="btn btn-primary">Cập nhật</button>
     </form>
+</div>
 </div>
 
 

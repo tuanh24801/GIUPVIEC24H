@@ -36,6 +36,7 @@ Route::middleware(['auth:customer'])->group(function(){
     Route::get('/pay',[App\Http\Controllers\Customer\CustomerController::class,'pay'])->name('customer.pay');
     Route::post('/create_payment',[App\Http\Controllers\Customer\CustomerController::class,'create_payment'])->name('customer.create_payment');
     Route::get('/return',[App\Http\Controllers\Customer\CustomerController::class,'return'])->name('customer.return');
+    Route::get('/payment_history',[App\Http\Controllers\Customer\CustomerController::class,'payment_history'])->name('customer.payment_history');
 });
 
 Route::prefix('customer')->name('customer.')->group(function(){
@@ -91,6 +92,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
             // Type Rental
             Route::get('/type_rentals',[App\Http\Controllers\Admin\JobController::class,'index_typeRentals'])->name('index_type_rentals');
             Route::post('/type_rentals/add',[App\Http\Controllers\Admin\JobController::class,'create_typeRentals'])->name('create_type_rental');
+        });
+
+        Route::prefix('payment')->name('payment.')->group(function (){
+            Route::get('/',[App\Http\Controllers\Admin\PaymentController::class,'index'])->name('index');
         });
 
     });
