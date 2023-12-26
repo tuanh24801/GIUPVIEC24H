@@ -26,11 +26,14 @@ Route::get('/customer',function(){
     return redirect()->route('home');
 });
 // Route::get('/customer',[App\Http\Controllers\Customer\HomeController::class,'index'])->name('home');
-Route::get('/jobs',[App\Http\Controllers\Customer\HomeController::class,'job_list'])->name('job-list');
+Route::get('/jobs',[App\Http\Controllers\Customer\JobController::class,'job_list'])->name('job-list');
 
 
 Route::middleware(['auth:customer'])->group(function(){
-    Route::get('/job/{job_id}',[App\Http\Controllers\Customer\HomeController::class,'job_detail'])->name('job-detail');
+    Route::get('/job/{job_id}',[App\Http\Controllers\Customer\JobController::class,'job_detail'])->name('job-detail');
+    Route::get('/job_rental/j={job_id}&e={errand_worker_id}',[App\Http\Controllers\Customer\JobController::class,'job_rental'])->name('job-rental');
+    Route::post('/handle_rental/{job_rental_id}',[App\Http\Controllers\Customer\JobController::class,'handle_rental'])->name('handle-rental');
+
     Route::get('/profile',[App\Http\Controllers\Customer\CustomerController::class,'profile'])->name('customer.profile');
     Route::post('/profile/update',[App\Http\Controllers\Customer\CustomerController::class,'update'])->name('customer.update');
     Route::get('/pay',[App\Http\Controllers\Customer\CustomerController::class,'pay'])->name('customer.pay');
