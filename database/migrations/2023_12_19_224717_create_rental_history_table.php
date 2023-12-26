@@ -19,9 +19,9 @@ return new class extends Migration
             $table->unsignedBigInteger('job_rental_id');
             $table->integer('total');
             $table->string('location');
-            $table->string('errand_worker_status');
-            $table->string('customer_status');
-            $table->string('note');
+            $table->string('errand_worker_status')->nullable();
+            $table->string('customer_status')->nullable();
+            $table->string('note')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->foreign('job_rental_id')->references('id')->on('job_rentals')->onDelete('cascade');
             $table->timestamps();
