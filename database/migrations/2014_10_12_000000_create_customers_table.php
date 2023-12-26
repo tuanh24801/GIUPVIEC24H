@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('account_balance')->default(0);
             $table->string('address')->nullable();
-            $table->string('phone', 10);
+            $table->string('phone', 10)->nullable();
             $table->string('avatar')->nullable();
             $table->string('location')->nullable();
             $table->string('email');

@@ -24,20 +24,24 @@ class CustomerController extends Controller
     public function create(Request $request){
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:customers,email',
-            'password' => 'required|min:6|max:15',
-            'cpassword' => 'required|same:password',
+            'email_re' => 'required|email|unique:customers,email',
+            'password_re' => 'required|min:6|max:15',
+            'cpassword_re' => 'required|same:password_re',
         ],[
-            'cpassword.same' => 'The confirm password and password must match'
+            'cpassword_re.same' => 'The confirm password and password must match'
         ]);
 
         $user = new Customer();
         $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user->email = $request->email_re;
+        $user->password = Hash::make($request->password_re);
         $data = $user->save();
         if($data){
-            return back()->with('success', 'User created successfully');
+            if(Auth::guard('customer')->attempt(['email' => $request->email_re, 'password' => $request->password_re])){
+                return redirect()->route('home');
+            }else{
+                return back()->with('error', 'Something went wrong');
+            }
         }else{
             return back()->with('error', 'Something went wrong');
         }
@@ -50,11 +54,9 @@ class CustomerController extends Controller
         ]);
         if(Auth::guard('customer')->attempt($request->only('email', 'password'))){
             return redirect()->route('home');
-            // return 'ddawng nhap ok';
         }else{
-            return back()->with('error', 'Something went wrong');
+            return back()->with('error', 'Vui lòng kiếm tra lại thông tin đăng nhập');
         }
-        // return 'asdasf';
     }
 
     public function logout(Request $request){

@@ -22,7 +22,7 @@
                         <p class="">Hoàn thành: 1</p>
                     </div>
                     <div class="card-seemore-dworker">
-                        <a href="">xem thêm</a>
+                        <a href="" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" onclick="event.preventDefault()">xem thêm</a>
                     </div>
                 </div>
               </div>

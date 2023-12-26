@@ -9,7 +9,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
-
+<style>
+    label{
+        font-weight: 700;
+        color: black;
+        font-size: 15px;
+    }
+</style>
 <body>
     <div class="header">
         <div class="container">
@@ -38,8 +44,8 @@
                     </div>
                     <div class="bot-head-login">
                         @guest('customer')
-                            <a href="{{ route('customer.login') }}" class="text-white me-3">Đăng nhập</a>
-                            <a href="{{ route('customer.register') }}" class="text-white">Đăng ký</a>
+                            <a href="{{ route('customer.login') }}" class="text-white me-3" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" onclick="event.preventDefault()">Đăng nhập</a>
+                            <a href="{{ route('customer.register') }}" class="text-white" data-bs-toggle="modal" data-bs-target="#exampleModalToggle2" onclick="event.preventDefault()">Đăng ký</a>
                         @else
                             <div class="btn-group">
                                 <button class="btn btn-sm" type="button">
@@ -70,9 +76,91 @@
                         @endguest
                     </div>
                 </div>
+
+                <!-- Modal -->
+                @guest('customer')
+                <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5 text-dark" id="exampleModalToggleLabel">Đăng nhập</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            @if (session('error'))
+                                <b class="text-danger">{{ session('error') }}</b>
+                            @endif
+                            <form action="{{ route('customer.doLogin') }}" method="post">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="email" >Email</label>
+                                    <input type="email" class="form-control" name="email" id="" placeholder="Enter email ..." value="{{ old('email') }}" style="height: 45px;"/>
+                                    <span class="text-danger">@error('email'){{ $message }} @enderror</span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" >Mật khẩu</label>
+                                    <input type="password" class="form-control" name="password" id="" placeholder="Enter password ..." value="{{ old('password') }}" style="height: 45px;"/>
+                                    <span class="text-danger">@error('password'){{ $message }} @enderror</span>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                                <p class="mt-3 text-dark">
+                                   Đăng ký tài khoản mới <a class="text-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" onclick="event.preventDefault()">Đăng ký</a>
+                                </p>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Đóng</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5 text-dark" id="exampleModalToggleLabel2">Đăng ký</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('customer.create') }}" method="post">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="name">Họ và tên</label>
+                                    <input type="name" class="form-control" name="name" id="" placeholder="Enter full name ..." value="{{ old('name') }}" style="height: 45px;"/>
+                                    <span class="text-danger">@error('name'){{ $errors->first('name') }} @enderror</span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" >Email</label>
+                                    <input type="email" class="form-control" name="email_re" id="" placeholder="Enter email ..." value="{{ old('email_re') }}" style="height: 45px;"/>
+                                    <span class="text-danger">@error('email_re'){{ $message }} @enderror</span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" >Mật khẩu</label>
+                                    <input type="password" class="form-control" name="password_re" id="" placeholder="Enter password ..." value="{{ old('password_re') }}" style="height: 45px;"/>
+                                    <span class="text-danger">@error('password_re'){{ $message }} @enderror</span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="cpassword" >Xác nhận mật khẩu</label>
+                                    <input type="password" class="form-control" name="cpassword_re" id="" placeholder="Confirm password ..." value="{{ old('cpassword_re') }}" style="height: 45px;"/>
+                                    <span class="text-danger">@error('cpassword_re'){{ $message }} @enderror</span>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Đăng ký</button>
+                                <p class="mt-3 text-dark">
+                                    Đã có tài khoản <a class="text-primary" onclick="openLoginModal()">Đăng nhập</a>
+                                </p>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Đóng</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                @endguest
+
                 <div class="bot-head-tag">
                     <a href="" class="text-white"><b>
-                            <h3>Tìm ảnh custom xong giao diện trang chủ</h3>
+                            {{-- <h3>Tìm ảnh custom xong giao diện trang chủ</h3> --}}
                         </b></a>
                     <!-- <a href="" class="text-white">Giúp việc2</a>
                     <a href="" class="text-white">Giúp việc3</a>
@@ -91,16 +179,18 @@
                         việc </a>
                 </li>
                 @foreach ($jobs as $job)
-                    <li class="btn-item-list-job"><a class="btn-job" href="">{{ $job->name }}</a></li>
+                    <li class="btn-item-list-job"><a class="btn-job" href="{{ route('job-detail', ['job_id' => $job->id]) }}" @guest('customer') data-bs-target="#exampleModalToggle" data-bs-toggle="modal" onclick="event.preventDefault()" @endguest>{{ $job->name }}</a></li>
                 @endforeach
-                <li class="btn-item-list-job btn-item-list-seemore"><a class="btn-job" href="{{ route('job-list') }}">Xem thêm</a></li>
+                @auth('customer')
+                    <li class="btn-item-list-job btn-item-list-seemore"><a class="btn-job" href="{{ route('job-list') }}">Xem thêm</a></li>
 
-                <li class="mt-5 btn-item-list-job btn-item-list-history input_money">
-                    <a class="btn-job-history" href="{{ route('customer.pay') }}">Nạp tiền</a>
-                </li>
-                <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('customer.profile') }}">Cá nhân</a></li>
-                <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Đang thực hiện: 1</a></li>
-                <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Đang chờ: 1</a></li>
+                    <li class="mt-5 btn-item-list-job btn-item-list-history input_money">
+                        <a class="btn-job-history" href="{{ route('customer.pay') }}">Nạp tiền</a>
+                    </li>
+                    <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('customer.profile') }}">Cá nhân</a></li>
+                    <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Đang thực hiện: 1</a></li>
+                    <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Đang chờ: 1</a></li>
+                @endauth
             </ul>
         </div>
         <div class="main-content">
@@ -113,10 +203,47 @@
 
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    @if($errors->has('email') || $errors->has('password') || session('error'))
+    <script>
+        const loginModal = new bootstrap.Modal('#exampleModalToggle');
+        const registerModal = new bootstrap.Modal('#exampleModalToggle2');
+        window.addEventListener('DOMContentLoaded', () => {
+            loginModal.show();
+        });
+        function openLoginModal(){
+            registerModal.hide();
+            loginModal.show();
+        }
+    </script>
+    @endif
+
+    @if($errors->has('email_re') || $errors->has('password_re') || $errors->has('name') || $errors->has('c_password_re') )
+    <script>
+        const loginModal = new bootstrap.Modal('#exampleModalToggle');
+        const registerModal = new bootstrap.Modal('#exampleModalToggle2');
+        window.addEventListener('DOMContentLoaded', () => {
+            registerModal.show();
+        });
+        function openLoginModal(){
+            registerModal.hide();
+            loginModal.show();
+        }
+    </script>
+    @endif
+    <script>
+        const loginModal = new bootstrap.Modal('#exampleModalToggle');
+        const registerModal = new bootstrap.Modal('#exampleModalToggle2');
+        function openLoginModal(){
+            registerModal.hide();
+            loginModal.show();
+        }
+    </script>
+
     @yield('scripts')
+
 
 </body>
 

@@ -32,7 +32,7 @@
                         <td>{{ $payment->customer->name }}</td>
                         <td>{{ $payment->bank_code }}</td>
                         <td>{{ $payment->card_type }}</td>
-                        <td>{{ $payment->amount }}</td>
+                        <td>{{ Magarrent\LaravelCurrencyFormatter\Facades\Currency::currency("VND")->format($payment->amount) }}</td>
                         <td><a href="#" class="btn {{ $payment->status == 1 ? 'btn-success' : 'btn-secondary'}}">{{ $payment->status == 1 ? 'Thành công' : 'Thất bại'}}</a></td>
                         <td>{{ $payment->created_at }}</td>
                     </tr>

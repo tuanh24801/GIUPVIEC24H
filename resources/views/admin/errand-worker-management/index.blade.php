@@ -61,6 +61,7 @@
             </tbody>
         </table>
         {{ $errand_workers->links() }}
+        <div style="height: 140px;"></div>
     </div>
 @endsection
 

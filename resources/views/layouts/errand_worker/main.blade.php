@@ -90,8 +90,8 @@
                                     ${{ Auth::guard('errand_worker')->user()->account_balance }}
                                 </li>
                             </ul>
-                            <img src="{{ asset('https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg') }}"
-                                class="rounded-circle " height="55" alt="" loading="lazy" />
+                            <img src="{{ asset('storage/images/errand_worker-images/'.Auth::guard('errand_worker')->user()->avatar) }}"
+                                class="rounded-circle " height="60" alt="" loading="lazy" />
                         </a>
                     </li>
                 </ul>
