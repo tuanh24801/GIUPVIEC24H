@@ -5,8 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\TypeRental;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\TypeRental;
+use App\Models\ErrandWorker;
+use App\Models\Job;
+
 
 class JobRental extends Model
 {
@@ -23,4 +26,14 @@ class JobRental extends Model
     public function type_rental(): BelongsTo{
         return $this->belongsTo(TypeRental::class, 'type_rental_id');
     }
+
+    public function errand_workers(): BelongsTo{
+        return $this->belongsTo(ErrandWorker::class, 'errand_worker_id', 'id');
+
+    }
+
+    public function jobs(): BelongsTo{
+        return $this->belongsTo(Job::class, 'job_id', 'id');
+    }
+
 }

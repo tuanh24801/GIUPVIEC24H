@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Payment;
+use App\Models\RentalHistory;
+use App\Models\JobRental;
 
 
 class Customer extends Authenticatable
@@ -40,4 +42,18 @@ class Customer extends Authenticatable
     {
         return $this->hasMany(Payment::class, 'customer_id');
     }
+
+    public function job_rentals(): BelongsToMany
+    {
+        return $this->belongsToMany(JobRental::class, 'rental_history', 'customer_id', 'job_rental_id');
+    }
+
+    public function rentalHistories(): HasMany
+    {
+        return $this->hasMany(RentalHistory::class, 'customer_id');
+    }
+
+
+
+
 }

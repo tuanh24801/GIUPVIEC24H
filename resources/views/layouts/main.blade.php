@@ -69,6 +69,7 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ route('customer.profile') }}"><b class="text-dark">Cá nhân</b></a></li>
+                                    <li><a class="dropdown-item" href="{{ route('customer.rental-history') }}"><b class="text-dark">Lịch sử thuê</b></a></li>
                                     <li><a class="dropdown-item" href="{{ route('customer.payment_history') }}"><b class="text-dark">Lịch sử nạp tiền</b></a></li>
                                     <li><a class="dropdown-item" href="{{ route('customer.logout') }}"><b class="text-dark">Đăng xuất</b></a></li>
                                 </ul>
@@ -188,8 +189,14 @@
                         <a class="btn-job-history" href="{{ route('customer.pay') }}">Nạp tiền</a>
                     </li>
                     <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('customer.profile') }}">Cá nhân</a></li>
-                    <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Đang thực hiện: 1</a></li>
-                    <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Đang chờ: 1</a></li>
+                    <li class="btn-item-list-job btn-item-list-history">
+                        <a class="btn-job-history" href="{{ route('customer.rental-history') }}">
+                            Lịch sử thuê <br>
+                            Đang thực hiện 0
+                        </a>
+                    </li>
+                    {{-- <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Đang thực hiện: 1</a></li>
+                    <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Đang chờ: 1</a></li> --}}
                 @endauth
             </ul>
         </div>

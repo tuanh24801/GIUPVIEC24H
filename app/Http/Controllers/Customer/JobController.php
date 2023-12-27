@@ -69,16 +69,13 @@ class JobController extends Controller
             return redirect()->back()->with('msg','Bạn không đủ số dư vui lòng nạp tiền để tiếp tục');
         }
 
-        // if($job_rental->cost*$request->amount - $customer->account_balance < 0){
-        //     return redirect()->back()->with('msg','Chúc mừng Bạn đủ số dư');
-        // }
-
         $rentalHistory = new RentalHistory();
 
         $rentalHistory->customer_id = $customer->id;
         $rentalHistory->job_rental_id = $job_rental->id;
         $rentalHistory->total = $job_rental->cost*$request->amount;
         $rentalHistory->location = $request->location;
+        $rentalHistory->errand_worker_status = 'Đang chờ';
         if(!empty($request->note)){
             $rentalHistory->note = $request->note;
         }
@@ -86,7 +83,11 @@ class JobController extends Controller
         $customer->account_balance = $customer->account_balance - $job_rental->cost*$request->amount;
         $customer->save();
 
-        return redirect()->back()->with('msg','Thuê thành công');
+        return redirect()->route('customer.rental-history');
+    }
 
+    public function rental_history(){
+        $customer = Customer::find(Auth::guard('customer')->user()->id);
+        return view('customer.job.rental_history', ['customer' => $customer]);
     }
 }
