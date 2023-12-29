@@ -9,7 +9,7 @@ use App\Models\TypeRental;
 use App\Models\ErrandWorker;
 use App\Models\Customer;
 use App\Models\JobRental;
-
+use App\Models\RentalHistory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -136,5 +136,19 @@ class JobController extends Controller
         $job->status = 0;
         $job->save();
         return redirect()->route('errand_worker.job.index');
+    }
+
+    public function rental_history(){
+        $errand_worker = ErrandWorker::find(Auth::guard('errand_worker')->user()->id);
+        // dd($errand_worker->rental_histories);
+        return view('errand_worker.job-management.rental_history', ['errand_worker' => $errand_worker]);
+    }
+
+    public function status_job($rental_history_id, $e_status, $c_status){
+        $rentalHistory = RentalHistory::find($rental_history_id);
+        $rentalHistory->errand_worker_status = $e_status;
+        $rentalHistory->customer_status = $c_status;
+        $rentalHistory->save();
+        return redirect()->back();
     }
 }

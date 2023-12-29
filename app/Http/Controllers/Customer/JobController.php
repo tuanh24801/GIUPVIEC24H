@@ -76,6 +76,7 @@ class JobController extends Controller
         $rentalHistory->total = $job_rental->cost*$request->amount;
         $rentalHistory->location = $request->location;
         $rentalHistory->errand_worker_status = 'Đang chờ';
+        $rentalHistory->customer_status = 'Đang chờ';
         if(!empty($request->note)){
             $rentalHistory->note = $request->note;
         }
@@ -89,5 +90,16 @@ class JobController extends Controller
     public function rental_history(){
         $customer = Customer::find(Auth::guard('customer')->user()->id);
         return view('customer.job.rental_history', ['customer' => $customer]);
+    }
+
+    public function status_job($rental_history_id, $e_status = '', $c_status){
+        $rentalHistory = RentalHistory::find($rental_history_id);
+        if($e_status == ''){
+            $rentalHistory->errand_worker_status = $e_status;
+        }
+        $rentalHistory->customer_status = $c_status;
+        $rentalHistory->save();
+        //xử lý nhận tiền
+        return redirect()->back();
     }
 }

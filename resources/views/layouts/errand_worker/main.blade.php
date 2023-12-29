@@ -26,7 +26,7 @@
                         <i class="fas fa-tachometer-alt fa-fw me-3" style="color: rgb(156, 156, 156);"></i><span
                             class="text-dark text-item-list-dworker">Quản lý việc</span>
                     </a>
-                    <a href="#" class="text-dark item-list-dworker p-3 mt-3" aria-current="true">
+                    <a href="{{ route('errand_worker.job.rental_history') }}" class="text-dark item-list-dworker p-3 mt-3" aria-current="true">
                         <i class="fa-solid fa-bell fa-fw me-3" style="color: rgb(156, 156, 156);"></i><span
                             class="text-dark text-item-list-dworker">Thông báo</span>
                             <!-- <i class="fa-solid fa-bell"></i> -->

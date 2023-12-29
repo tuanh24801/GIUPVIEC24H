@@ -1,4 +1,4 @@
-@extends('layouts.main', $jobs = App\Models\Job::where('status', 1)->offset(0)->limit(3)->get())
+@extends('layouts.errand_worker.main')
 <style>
 label{
     font-weight: 700;
@@ -7,27 +7,27 @@ label{
 }
 </style>
 @section('content')
-<div class="text-dark" style="margin-bottom: 100px;">
-    <h3 class="mt-3">Lịch sử thuê</h3>
+<div class="text-dark container" style="margin-bottom: 100px;">
+    <h3 class="mt-3">Lịch sử thuê người làm việc</h3>
     @if (!empty(session('msg')))
         <div class="text-center">
             <p class="text-success fs-5">{{ session('msg') }}</p>
         </div>
     @endif
-    <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-secondary">Trở lại</a>
+    {{-- <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-secondary">Trở lại</a> --}}
     <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true"><b class="text-dark">Đang chờ ({{ $customer->rentalHistories->where('errand_worker_status','Đang chờ')->count(); }})</b></button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false"><b class="text-dark">Đang thực hiện ({{ $customer->rentalHistories->where('errand_worker_status','Đang thực hiện')->count(); }})</b></button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"><b class="text-danger">Từ chối ({{ $customer->rentalHistories->where('errand_worker_status', '=' ,'KH Đã hủy')->count() + $customer->rentalHistories->where('errand_worker_status', '=' ,'NTH Đã hủy')->count(); }})</b></button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false"><b class="text-success">Hoàn thành ({{ $customer->rentalHistories->where('errand_worker_status','Hoàn thành')->count(); }})</b></button>
-    </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true"><b class="text-dark">Đang chờ ({{ $errand_worker->rental_histories->where('customer_status','Đang chờ')->count(); }})</b></button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false"><b class="text-dark">Đang thực hiện ({{ $errand_worker->rental_histories->where('errand_worker_status','Đang thực hiện')->count(); }})</b></button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"><b class="text-danger">Từ chối ({{ $errand_worker->rental_histories->where('errand_worker_status', '=' ,'KH Đã hủy')->count() + $errand_worker->rental_histories->where('errand_worker_status', '=' ,'NTH Đã hủy')->count(); }})</b></button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false"><b class="text-success">Hoàn thành ({{ $errand_worker->rental_histories->where('errand_worker_status','Hoàn thành')->count(); }})</b></button>
+        </li>
     </ul>
     <div class="tab-content" id="myTabContent">
         {{-- TAB ĐANG CHỜ --}}
@@ -37,29 +37,38 @@ label{
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Công việc</th>
-                        <th scope="col">Người thực hiện</th>
+                        <th scope="col">Khách hàng</th>
                         <th scope="col">Số tiền</th>
-                        <th scope="col">Trạng thái NTH</th>
+                        <th scope="col">Trạng thái khách hàng</th>
                         <th scope="col">Chi tiết</th>
                         <th scope="col">Thời gian bắt đầu</th>
                         <th scope="col">Thời gian cập nhật</th>
-                        <th scope="col">Hủy thuê</th>
+                        <th scope="col">Nhận việc</th>
+                        <th scope="col">Hủy việc</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @php $rentalHistories_1 =  $customer->rentalHistories->where('errand_worker_status','Đang chờ'); @endphp
+                    {{-- @php $rentalHistories_1 =  $customer->rentalHistories->where('errand_worker_status','Đang chờ'); @endphp --}}
+                    @php
+                        $rentalHistories_1 =  $errand_worker->rental_histories->where('customer_status','Đang chờ');
+                        $rentalHistories_1 = !empty($rentalHistories_1) ? $rentalHistories_1 : [];
+                    @endphp
                     @foreach ($rentalHistories_1  as $rentalHistory)
                             <tr>
                                 <th scope="row">{{ $rentalHistory->id }}</th>
                                 <td>{{ $rentalHistory->job_rental->jobs->name }}</td>
-                                <td>{{ $rentalHistory->job_rental->errand_workers->name }}</td>
+                                <td>{{ $rentalHistory->customer->name }}</td>
                                 <td>{{ Magarrent\LaravelCurrencyFormatter\Facades\Currency::currency("VND")->format($rentalHistory->total) }}</td>
-                                <td>{{ $rentalHistory->errand_worker_status == '' ? 'Đang chờ' : $rentalHistory->errand_worker_status }}</td>
+                                <td>{{ $rentalHistory->customer_status }}</td>
                                 <td> <a href="">xem</a></td>
                                 <td>{{ $rentalHistory->created_at }}</td>
                                 <td>{{ $rentalHistory->updated_at }}</td>
                                 <td>
-                                    <a href="{{ route('customer.job.status_job', ['rental_history_id' => $rentalHistory->id, 'e_status' => 'KH Đã hủy', 'c_status' => 'KH Đã hủy']) }}">Hủy</a>
+                                    <a href="{{ route('errand_worker.job.status_job', ['rental_history_id' => $rentalHistory->id, 'e_status' => 'Đang thực hiện', 'c_status' => 'Đang chờ thực hiện']) }}">Nhận việc</a>
+                                </td>
+                                <td>
+
+                                    <a href="{{ route('errand_worker.job.status_job', ['rental_history_id' => $rentalHistory->id, 'e_status' => 'NTH Đã hủy', 'c_status' => 'NTH Đã hủy']) }}">Hủy</a>
                                 </td>
 
                             </tr>
@@ -74,26 +83,33 @@ label{
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Công việc</th>
-                        <th scope="col">Người thực hiện</th>
+                        <th scope="col">Khách hàng</th>
                         <th scope="col">Số tiền</th>
-                        <th scope="col">Trạng thái NTH</th>
+                        <th scope="col">Trạng thái Khách hàng</th>
                         <th scope="col">Chi tiết</th>
                         <th scope="col">Thời gian bắt đầu</th>
                         <th scope="col">Thời gian cập nhật</th>
+                        <th scope="col">Hoàn thành</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @php $rentalHistories_2 =  $customer->rentalHistories->where('errand_worker_status','Đang thực hiện'); @endphp
+                    @php
+                        $rentalHistories_2 =  $errand_worker->rental_histories->where('errand_worker_status','Đang thực hiện');
+                        $rentalHistories_2 = !empty($rentalHistories_2) ? $rentalHistories_2 : [];
+                    @endphp
                     @foreach ($rentalHistories_2 as $rentalHistory)
                             <tr>
                                 <th scope="row">{{ $rentalHistory->id }}</th>
                                 <td>{{ $rentalHistory->job_rental->jobs->name }}</td>
-                                <td>{{ $rentalHistory->job_rental->errand_workers->name }}</td>
+                                <td>{{ $rentalHistory->customer->name }}</td>
                                 <td>{{ Magarrent\LaravelCurrencyFormatter\Facades\Currency::currency("VND")->format($rentalHistory->total) }}</td>
-                                <td>{{ $rentalHistory->errand_worker_status == '' ? 'Đang chờ' : $rentalHistory->errand_worker_status }}</td>
+                                <td>{{ $rentalHistory->customer_status }}</td>
                                 <td> <a href="">xem</a></td>
                                 <td>{{ $rentalHistory->created_at }}</td>
                                 <td>{{ $rentalHistory->updated_at }}</td>
+                                <td>
+                                    <a href="{{ route('errand_worker.job.status_job', ['rental_history_id' => $rentalHistory->id, 'e_status' => 'Hoàn thành', 'c_status' => 'Chưa xác nhận']) }}">Xác nhận</a>
+                                </td>
 
                             </tr>
                     @endforeach
@@ -107,51 +123,53 @@ label{
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Công việc</th>
-                        <th scope="col">Người thực hiện</th>
+                        <th scope="col">Khách hàng</th>
                         <th scope="col">Số tiền</th>
-                        <th scope="col">Trạng thái NTH</th>
+                        <th scope="col">Trạng thái Khách hàng</th>
                         <th scope="col">Chi tiết</th>
                         <th scope="col">Thời gian bắt đầu</th>
                         <th scope="col">Thời gian cập nhật</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {{-- @php $rentalHistories_3 =  $customer->rentalHistories->where('errand_worker_status','Từ chối'); @endphp --}}
                     @php
-                        $rentalHistories_3 =  $customer->rentalHistories->where('errand_worker_status','LIKE' ,'NTH Đã hủy');
+                        $rentalHistories_3 =  $errand_worker->rental_histories->where('customer_status', 'LIKE' ,'NTH Đã hủy');
+                        // dd($rentalHistories_3);
                         $rentalHistories_3 = !empty($rentalHistories_3) ? $rentalHistories_3 : [];
                     @endphp
-
                     @foreach ($rentalHistories_3 as $rentalHistory)
                             <tr>
                                 <th scope="row">{{ $rentalHistory->id }}</th>
                                 <td>{{ $rentalHistory->job_rental->jobs->name }}</td>
-                                <td>{{ $rentalHistory->job_rental->errand_workers->name }}</td>
+                                <td>{{ $rentalHistory->customer->name }}</td>
                                 <td>{{ Magarrent\LaravelCurrencyFormatter\Facades\Currency::currency("VND")->format($rentalHistory->total) }}</td>
-                                <td>{{ $rentalHistory->errand_worker_status }}</td>
+                                <td>{{ $rentalHistory->customer_status }}</td>
                                 <td> <a href="">xem</a></td>
                                 <td>{{ $rentalHistory->created_at }}</td>
                                 <td>{{ $rentalHistory->updated_at }}</td>
+
                             </tr>
                     @endforeach
 
                     @php
-                        $rentalHistories_31 =  $customer->rentalHistories->where('errand_worker_status','LIKE' ,'KH Đã hủy');
-                        $rentalHistories_31 = !empty($rentalHistories_31) ? $rentalHistories_31 : [];
+                        $rentalHistories_3 =  $errand_worker->rental_histories->where('customer_status', 'LIKE', 'KH Đã hủy');
+                        // dd($rentalHistories_3);
+                        $rentalHistories_3 = !empty($rentalHistories_3) ? $rentalHistories_3 : [];
                     @endphp
-                    @foreach ($rentalHistories_31 as $rentalHistory)
+                    @foreach ($rentalHistories_3 as $rentalHistory)
                             <tr>
                                 <th scope="row">{{ $rentalHistory->id }}</th>
                                 <td>{{ $rentalHistory->job_rental->jobs->name }}</td>
-                                <td>{{ $rentalHistory->job_rental->errand_workers->name }}</td>
+                                <td>{{ $rentalHistory->customer->name }}</td>
                                 <td>{{ Magarrent\LaravelCurrencyFormatter\Facades\Currency::currency("VND")->format($rentalHistory->total) }}</td>
-                                <td>{{ $rentalHistory->errand_worker_status }}</td>
+                                <td>{{ $rentalHistory->customer_status }}</td>
                                 <td> <a href="">xem</a></td>
                                 <td>{{ $rentalHistory->created_at }}</td>
                                 <td>{{ $rentalHistory->updated_at }}</td>
 
                             </tr>
                     @endforeach
-
                 </tbody>
             </table>
         </div>
@@ -162,40 +180,30 @@ label{
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Công việc</th>
-                        <th scope="col">Người thực hiện</th>
+                        <th scope="col">Khách hàng</th>
                         <th scope="col">Số tiền</th>
-                        <th scope="col">Trạng thái NTH</th>
+                        <th scope="col">Trạng thái Khách hàng</th>
                         <th scope="col">Chi tiết</th>
                         <th scope="col">Thời gian bắt đầu</th>
                         <th scope="col">Thời gian cập nhật</th>
-                        <th scope="col">Xác nhận Hoàn thành</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @php $rentalHistories_4 =  $customer->rentalHistories->where('errand_worker_status','Hoàn thành'); @endphp
+                    {{-- @php $rentalHistories_4 =  $customer->rentalHistories->where('errand_worker_status','Hoàn thành'); @endphp --}}
+                    @php
+                        $rentalHistories_4 =  $errand_worker->rental_histories->where('errand_worker_status', 'like', 'Hoàn thành');
+                        $rentalHistories_4 = !empty($rentalHistories_4) ? $rentalHistories_4 : [];
+                    @endphp
                     @foreach ($rentalHistories_4 as $rentalHistory)
                             <tr>
                                 <th scope="row">{{ $rentalHistory->id }}</th>
                                 <td>{{ $rentalHistory->job_rental->jobs->name }}</td>
-                                <td>{{ $rentalHistory->job_rental->errand_workers->name }}</td>
+                                <td>{{ $rentalHistory->customer->name }}</td>
                                 <td>{{ Magarrent\LaravelCurrencyFormatter\Facades\Currency::currency("VND")->format($rentalHistory->total) }}</td>
-                                <td>{{ $rentalHistory->errand_worker_status }}</td>
+                                <td>{{ $rentalHistory->customer_status }}</td>
                                 <td> <a href="">xem</a></td>
                                 <td>{{ $rentalHistory->created_at }}</td>
                                 <td>{{ $rentalHistory->updated_at }}</td>
-                                <td>
-                                    {{-- <a href="" class="">Xác nhận | Đã xác nhận</a> --}}
-                                    @if ($rentalHistory->customer_status == 'Chưa xác nhận')
-                                        <a href="{{ route('customer.job.status_job', ['rental_history_id' => $rentalHistory->id, 'e_status' => 'Hoàn thành', 'c_status' => 'Đã xác nhận']) }}">
-                                           Xác nhận
-                                        </a>
-                                    @else
-                                        <a href="#">
-                                            Đã xác nhận
-                                        </a>
-                                    @endif
-
-                                </td>
 
                             </tr>
                     @endforeach
