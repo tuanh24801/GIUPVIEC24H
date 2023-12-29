@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\TypeRental;
 use App\Models\ErrandWorker;
 use App\Models\Job;
+use App\Models\RentalHistory;
 
 
 class JobRental extends Model
@@ -29,8 +30,12 @@ class JobRental extends Model
 
     public function errand_workers(): BelongsTo{
         return $this->belongsTo(ErrandWorker::class, 'errand_worker_id', 'id');
-
     }
+
+    public function rental_histories(): HasMany{
+        return $this->hasMany(RentalHistory::class, 'job_rental_id');
+    }
+
 
     public function jobs(): BelongsTo{
         return $this->belongsTo(Job::class, 'job_id', 'id');

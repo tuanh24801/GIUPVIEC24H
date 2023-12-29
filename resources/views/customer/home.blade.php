@@ -1,6 +1,6 @@
 
 @guest('customer')
-    Trang chủ nè <br>
+    Trang chủ<br>
     Bạn có thể: <br>
     <a href="{{ route('customer.login') }}">Đăng nhập</a><br>
     <a href="{{ route('customer.register') }}">Đăng ký</a>

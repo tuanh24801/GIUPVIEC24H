@@ -1,4 +1,4 @@
-@extends('layouts.main', $jobs = App\Models\Job::where('status', 1)->get())
+@extends('layouts.main', $jobs = App\Models\Job::where('status', 1)->offset(0)->limit(3)->get())
 <style>
 label{
     font-weight: 700;
@@ -43,6 +43,7 @@ label{
                         <th scope="col">Chi tiết</th>
                         <th scope="col">Thời gian bắt đầu</th>
                         <th scope="col">Thời gian cập nhật</th>
+                        <th scope="col">Hủy thuê</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,11 +53,12 @@ label{
                                 <th scope="row">{{ $rentalHistory->id }}</th>
                                 <td>{{ $rentalHistory->job_rental->jobs->name }}</td>
                                 <td>{{ $rentalHistory->job_rental->errand_workers->name }}</td>
-                                <td>{{ $rentalHistory->total }}</td>
+                                <td>{{ Magarrent\LaravelCurrencyFormatter\Facades\Currency::currency("VND")->format($rentalHistory->total) }}</td>
                                 <td>{{ $rentalHistory->errand_worker_status == '' ? 'Đang chờ' : $rentalHistory->errand_worker_status }}</td>
                                 <td> <a href="">xem</a></td>
                                 <td>{{ $rentalHistory->created_at }}</td>
                                 <td>{{ $rentalHistory->updated_at }}</td>
+                                <td><a href="">Hủy</a></td>
 
                             </tr>
                     @endforeach
@@ -85,7 +87,7 @@ label{
                                 <th scope="row">{{ $rentalHistory->id }}</th>
                                 <td>{{ $rentalHistory->job_rental->jobs->name }}</td>
                                 <td>{{ $rentalHistory->job_rental->errand_workers->name }}</td>
-                                <td>{{ $rentalHistory->total }}</td>
+                                <td>{{ Magarrent\LaravelCurrencyFormatter\Facades\Currency::currency("VND")->format($rentalHistory->total) }}</td>
                                 <td>{{ $rentalHistory->errand_worker_status == '' ? 'Đang chờ' : $rentalHistory->errand_worker_status }}</td>
                                 <td> <a href="">xem</a></td>
                                 <td>{{ $rentalHistory->created_at }}</td>
@@ -118,7 +120,7 @@ label{
                                 <th scope="row">{{ $rentalHistory->id }}</th>
                                 <td>{{ $rentalHistory->job_rental->jobs->name }}</td>
                                 <td>{{ $rentalHistory->job_rental->errand_workers->name }}</td>
-                                <td>{{ $rentalHistory->total }}</td>
+                                <td>{{ Magarrent\LaravelCurrencyFormatter\Facades\Currency::currency("VND")->format($rentalHistory->total) }}</td>
                                 <td>{{ $rentalHistory->errand_worker_status == '' ? 'Đang chờ' : $rentalHistory->errand_worker_status }}</td>
                                 <td> <a href="">xem</a></td>
                                 <td>{{ $rentalHistory->created_at }}</td>
@@ -152,7 +154,7 @@ label{
                                 <th scope="row">{{ $rentalHistory->id }}</th>
                                 <td>{{ $rentalHistory->job_rental->jobs->name }}</td>
                                 <td>{{ $rentalHistory->job_rental->errand_workers->name }}</td>
-                                <td>{{ $rentalHistory->total }}</td>
+                                <td>{{ Magarrent\LaravelCurrencyFormatter\Facades\Currency::currency("VND")->format($rentalHistory->total) }}</td>
                                 <td>{{ $rentalHistory->errand_worker_status == '' ? 'Đang chờ' : $rentalHistory->errand_worker_status }}</td>
                                 <td> <a href="">xem</a></td>
                                 <td>{{ $rentalHistory->created_at }}</td>

@@ -1,4 +1,4 @@
-@extends('layouts.main', $jobs = App\Models\Job::where('status', 1)->get())
+@extends('layouts.main', $jobs = App\Models\Job::where('status', 1)->offset(0)->limit(3)->get())
 
 @section('content')
     <div class="title-list-dworker">
@@ -32,7 +32,15 @@
             </div>
         @endforeach
 
+        {{ $jobs->links() }}
+
     </div>
 
+
+@endsection
+@section('scripts')
+<script>
+        $('#value_search').val('');
+</script>
 
 @endsection

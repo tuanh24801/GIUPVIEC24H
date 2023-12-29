@@ -1,4 +1,4 @@
-@extends('layouts.main', $jobs = App\Models\Job::where('status', 1)->get())
+@extends('layouts.main', $jobs = App\Models\Job::where('status', 1)->offset(0)->limit(3)->get())
 <style>
 label{
     font-weight: 700;

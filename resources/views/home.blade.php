@@ -1,114 +1,32 @@
-@extends('layouts.main', $jobs = App\Models\Job::where('status', 1)->get())
+@extends('layouts.main', $jobs = App\Models\Job::where('status', 1)->offset(0)->limit(3)->get())
 
 @section('content')
 
     <div class="title-list-dworker">
-        <h2 class="text-dark">Danh sách người chạy việc</h2>
+        <h2 class="text-dark">Danh sách người làm việc</h2>
     </div>
     <!-- Dánh sach người chạy việc -->
-    <div class="list-dworker">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 ">
-            <div class="col mb-3">
-              <div class="card box-dworker">
-                <div class="top-card-dworker">
-                    <p class="text-dark box-worker-top-star">4.9/5</p>
-                    <p class="text-dark">'<3'</p>
-                </div>
-                <img src="{{ asset('images/user_1.png') }}" class="img-info-dworker" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title text-dark">Nguyễn Tuấn Anh</h5>
-                    <div class="card-info-dworker">
-                        <p class="">Lượt thuê: 1</p>
-                        <p class="">Hoàn thành: 1</p>
-                    </div>
-                    <div class="card-seemore-dworker">
-                        <a href="" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" onclick="event.preventDefault()">xem thêm</a>
+    <div class="row mt-4">
+        @foreach ($errand_workers as $errand_worker)
+            <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
+                <div class="card">
+                    <div class="card-body d-flex">
+                        <img src="{{ asset('storage/images/errand_worker-images/'. $errand_worker->avatar) }}" alt="" class="img-fluid rounded-start" style="width: 100px; height: 100px;">
+                        <div class="mx-3">
+                            <h5 class="card-title text-dark">{{ $errand_worker->name }}</h5>
+                            <p class="card-text text-dark">Số công việc đã làm: {{ $errand_worker->rental_histories->count() }}</p>
+                            {{-- <p class="card-text text-dark">Số người nhận việc: {{ $job->errand_workers->count() }}</p> --}}
+                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
+
+                        </div>
+
                     </div>
                 </div>
-              </div>
             </div>
+        @endforeach
 
-            <div class="col mb-3">
-                <div class="card box-dworker">
-                  <div class="top-card-dworker">
-                      <p class="text-dark box-worker-top-star">4.9/5</p>
-                      <p class="text-dark">'<3'</p>
-                  </div>
-                  <img src="images/user_1.png" class="img-info-dworker" alt="...">
-                  <div class="card-body">
-                      <h5 class="card-title text-dark">Nguyễn Tuấn Anh</h5>
-                      <div class="card-info-dworker">
-                          <p class="">Lượt thuê: 1</p>
-                          <p class="">Hoàn thành: 1</p>
-                      </div>
-                      <div class="card-seemore-dworker">
-                          <a href="">xem thêm</a>
-                      </div>
-                  </div>
-                </div>
-              </div>
+        {{ $errand_workers->links() }}
 
-              <div class="col mb-3">
-                <div class="card box-dworker">
-                  <div class="top-card-dworker">
-                      <p class="text-dark box-worker-top-star">4.9/5</p>
-                      <p class="text-dark">'<3'</p>
-                  </div>
-                  <img src="images/user_1.png" class="img-info-dworker" alt="...">
-                  <div class="card-body">
-                      <h5 class="card-title text-dark">Nguyễn Tuấn Anh</h5>
-                      <div class="card-info-dworker">
-                          <p class="">Lượt thuê: 1</p>
-                          <p class="">Hoàn thành: 1</p>
-                      </div>
-                      <div class="card-seemore-dworker">
-                          <a href="">xem thêm</a>
-                      </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col mb-3">
-                <div class="card box-dworker">
-                  <div class="top-card-dworker">
-                      <p class="text-dark box-worker-top-star">4.9/5</p>
-                      <p class="text-dark">'<3'</p>
-                  </div>
-                  <img src="images/user_1.png" class="img-info-dworker" alt="...">
-                  <div class="card-body">
-                      <h5 class="card-title text-dark">Nguyễn Tuấn Anh</h5>
-                      <div class="card-info-dworker">
-                          <p class="">Lượt thuê: 1</p>
-                          <p class="">Hoàn thành: 1</p>
-                      </div>
-                      <div class="card-seemore-dworker">
-                          <a href="">xem thêm</a>
-                      </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col mb-3">
-                <div class="card box-dworker">
-                  <div class="top-card-dworker">
-                      <p class="text-dark box-worker-top-star">4.9/5</p>
-                      <p class="text-dark">'<3'</p>
-                  </div>
-                  <img src="images/user_1.png" class="img-info-dworker" alt="...">
-                  <div class="card-body">
-                      <h5 class="card-title text-dark">Nguyễn Tuấn Anh</h5>
-                      <div class="card-info-dworker">
-                          <p class="">Lượt thuê: 1</p>
-                          <p class="">Hoàn thành: 1</p>
-                      </div>
-                      <div class="card-seemore-dworker">
-                          <a href="">xem thêm</a>
-                      </div>
-                  </div>
-                </div>
-              </div>
-
-        </div>
     </div>
     <!-- End Dánh sach người chạy việc -->
 
@@ -116,110 +34,33 @@
         <h2 class="text-dark">Danh sách công việc hiện có</h2>
     </div>
     <!-- Dánh sach công việchiện có -->
-    <div class="list-dworker">
-        <div class="row row-cols-1 row-cols-md-4 ">
-            <div class="col mb-3">
-              <div class="card box-dworker">
-                <div class="top-card-dworker">
-                    <p class="text-dark box-worker-top-star">4.9/5</p>
-                    <p class="text-dark"><i class="fa-regular fa-heart fa-lg" style="color: red;"></i></p>
-                </div>
-                <img src="images/user_1.png" class="img-info-dworker" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title text-dark">Nguyễn Tuấn Anh</h5>
-                    <div class="card-info-dworker">
-                        <p class="">Lượt thuê: 1</p>
-                        <p class="">Hoàn thành: 1</p>
-                    </div>
-                    <div class="card-seemore-dworker">
-                        <a href="">xem thêm</a>
+    <div class="row mt-4">
+        @foreach ($jobs as $job)
+            <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
+                <div class="card">
+                    <div class="card-body d-flex">
+                        <img src="{{ asset('storage/images/job-images/'. $job->avatar) }}" alt="" class="img-fluid rounded-start" style="width: 100px; height: 100px;">
+                        <div class="mx-3">
+                            <h5 class="card-title text-dark">{{ $job->name }}</h5>
+                            {{-- <p class="card-text text-dark">{{ $job->note }}</p> --}}
+                            <p class="card-text text-dark">Số người nhận việc: {{ $job->errand_workers->count() }}</p>
+                            <a href="{{ route('job-detail', $job->id) }}" class="btn btn-primary">Xem chi tiết</a>
+                        </div>
                     </div>
                 </div>
-              </div>
             </div>
+        @endforeach
 
-            <div class="col mb-3">
-                <div class="card box-dworker">
-                  <div class="top-card-dworker">
-                      <p class="text-dark box-worker-top-star">4.9/5</p>
-                      <p class="text-dark"><i class="fa-regular fa-heart fa-lg" style="color: red;"></i></p>
-                  </div>
-                  <img src="images/user_1.png" class="img-info-dworker" alt="...">
-                  <div class="card-body">
-                      <h5 class="card-title text-dark">Nguyễn Tuấn Anh</h5>
-                      <div class="card-info-dworker">
-                          <p class="">Lượt thuê: 1</p>
-                          <p class="">Hoàn thành: 1</p>
-                      </div>
-                      <div class="card-seemore-dworker">
-                          <a href="">xem thêm</a>
-                      </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col mb-3">
-                <div class="card box-dworker">
-                  <div class="top-card-dworker">
-                      <p class="text-dark box-worker-top-star">4.9/5</p>
-                      <p class="text-dark"><i class="fa-regular fa-heart fa-lg" style="color: red;"></i></p>
-                  </div>
-                  <img src="images/user_1.png" class="img-info-dworker" alt="...">
-                  <div class="card-body">
-                      <h5 class="card-title text-dark">Nguyễn Tuấn Anh</h5>
-                      <div class="card-info-dworker">
-                          <p class="">Lượt thuê: 1</p>
-                          <p class="">Hoàn thành: 1</p>
-                      </div>
-                      <div class="card-seemore-dworker">
-                          <a href="">xem thêm</a>
-                      </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col mb-3">
-                <div class="card box-dworker">
-                  <div class="top-card-dworker">
-                      <p class="text-dark box-worker-top-star">4.9/5</p>
-                      <p class="text-dark"><i class="fa-regular fa-heart fa-lg" style="color: red;"></i></p>
-                  </div>
-                  <img src="images/user_1.png" class="img-info-dworker" alt="...">
-                  <div class="card-body">
-                      <h5 class="card-title text-dark">Nguyễn Tuấn Anh</h5>
-                      <div class="card-info-dworker">
-                          <p class="">Lượt thuê: 1</p>
-                          <p class="">Hoàn thành: 1</p>
-                      </div>
-                      <div class="card-seemore-dworker">
-                          <a href="">xem thêm</a>
-                      </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col mb-3">
-                <div class="card box-dworker">
-                  <div class="top-card-dworker">
-                      <p class="text-dark box-worker-top-star">4.9/5</p>
-                      <p class="text-dark"><i class="fa-regular fa-heart fa-lg" style="color: red;"></i></p>
-                  </div>
-                  <img src="images/user_1.png" class="img-info-dworker" alt="...">
-                  <div class="card-body">
-                      <h5 class="card-title text-dark">Nguyễn Tuấn Anh</h5>
-                      <div class="card-info-dworker">
-                          <p class="">Lượt thuê: 1</p>
-                          <p class="">Hoàn thành: 1</p>
-                      </div>
-                      <div class="card-seemore-dworker">
-                          <a href="">xem thêm</a>
-                      </div>
-                  </div>
-                </div>
-              </div>
-
+    </div>
+    <div class="row">
+        <div class="col-3">
+        </div>
+        <div class="col-6">
+            <a href="{{ route('job-list') }}" class="btn btn-primary mt-3" style="width: 100%;">Xem thêm</a>
         </div>
     </div>
     <!-- End Dánh sach người chạy việc -->
 
 @endsection
+
+

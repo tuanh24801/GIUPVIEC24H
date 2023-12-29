@@ -15,7 +15,7 @@ class JobController extends Controller
 {
 
     public function job_list(){
-        $jobs = Job::where('status', 1)->get();
+        $jobs = Job::where('status', 1)->search()->paginate(10);
         return view('customer.job.job_list', ['jobs' => $jobs]);
     }
 

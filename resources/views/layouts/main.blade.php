@@ -39,8 +39,15 @@
                         </a>
                     </div>
                     <div class="bot-head-search" style="margin:auto;">
-                        <input type="text" class="form-control bot-head-search-form" placeholder="Từ khóa tìm kiếm tên hoặc công việc ... "
-                            style="border-radius: 40px;">
+                        <form action="{{ route('home') }}" method="get">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search..." name="s" style="border-radius: 35px 35px 35px 35px; height: 50px; padding: 0px 0px 0px 25px;" id="value_search" value="{{ request()->s }}">
+                                <a class="btn bg-transparent" style="margin-left: -40px; z-index: 100;" id="clear_search" href="{{ route('home') }}">
+                                  <i class="fa fa-times" style="margin-top: 10px;color: rgb(94, 88, 88); font-size: 17px;" ></i>
+                                </a>
+                            </div>
+                        </form>
+
                     </div>
                     <div class="bot-head-login">
                         @guest('customer')
@@ -158,17 +165,6 @@
                     </div>
                 </div>
                 @endguest
-
-                <div class="bot-head-tag">
-                    <a href="" class="text-white"><b>
-                            {{-- <h3>Tìm ảnh custom xong giao diện trang chủ</h3> --}}
-                        </b></a>
-                    <!-- <a href="" class="text-white">Giúp việc2</a>
-                    <a href="" class="text-white">Giúp việc3</a>
-                    <a href="" class="text-white">Giúp việc3</a>
-                    <a href="" class="text-white">Giúp việc4</a>
-                    <a href="" class="text-white">Giúp việc4</a> -->
-                </div>
             </div>
         </div>
     </div>
@@ -192,7 +188,7 @@
                     <li class="btn-item-list-job btn-item-list-history">
                         <a class="btn-job-history" href="{{ route('customer.rental-history') }}">
                             Lịch sử thuê <br>
-                            Đang thực hiện 0
+                            Đang thực hiện {{ Auth::guard('customer')->user()->rentalHistories->where('errand_worker_status','Đang thực hiện')->count() }}
                         </a>
                     </li>
                     {{-- <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Đang thực hiện: 1</a></li>
@@ -241,6 +237,7 @@
     </script>
     @endif
     <script>
+
         const loginModal = new bootstrap.Modal('#exampleModalToggle');
         const registerModal = new bootstrap.Modal('#exampleModalToggle2');
         function openLoginModal(){
