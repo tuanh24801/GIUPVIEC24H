@@ -20,7 +20,10 @@
     <div class="header">
         <div class="container">
             <div class="top-head d-flex">
-                <a href="{{ route('errand_worker.login') }}" class="text-white">Đăng ký làm việc | Hotline: 1900.8888</a>
+                <p>
+                    <a href="{{ route('admin.dashboard') }}" class="text-white">Trang quản trị |</a>
+                    <a href="{{ route('errand_worker.login') }}" class="text-white">Đăng ký làm việc | Hotline: 1900.8888</a>
+                </p>
                 <a href="" class="btn btn-position-top text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none">
@@ -188,7 +191,7 @@
                     <li class="btn-item-list-job btn-item-list-history">
                         <a class="btn-job-history" href="{{ route('customer.rental-history') }}">
                             Lịch sử thuê <br>
-                            Đang thực hiện {{ Auth::guard('customer')->user()->rentalHistories->where('errand_worker_status','Đang thực hiện')->count() }}
+                            Đang thực hiện ({{ Auth::guard('customer')->user()->rentalHistories->where('errand_worker_status','Đang thực hiện')->count() }})
                         </a>
                     </li>
                     {{-- <li class="btn-item-list-job btn-item-list-history"><a class="btn-job-history" href="{{ route('job-list') }}">Đang thực hiện: 1</a></li>

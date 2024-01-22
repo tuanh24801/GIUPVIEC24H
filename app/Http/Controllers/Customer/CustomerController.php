@@ -159,6 +159,14 @@ class CustomerController extends Controller
         $vnp_TmnCode = "2EXE1VOI"; //Mã định danh merchant kết nối (Terminal Id)
         $vnp_HashSecret = "NCCKOMUNIMIBORJBFINSUIRTBYGOUMWX"; //Secret key
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+
+        // $array_main = [
+        //     'vnp_TmnCode' => '2EXE1VOII131B',
+        //     'vnp_HashSecret' => 'NCCKOMUNIMIBORJBFINSUIRTBYGOUMWXII131B',
+        //     'vnp_Url' => 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.htmlII131B',
+        // ];
+        // $result = rtrim($str, "!");
+
         $vnp_Returnurl = route('customer.return');
         $vnp_apiUrl = "http://sandbox.vnpayment.vn/merchant_webapi/merchant.html";
         $apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
@@ -300,7 +308,7 @@ class CustomerController extends Controller
             $customer->account_balance = $customer->account_balance+$payment->amount;
             $customer->save();
         }
-        return redirect()->back()->with('msg', $msg);
+        return redirect()->route('customer.pay')->with('msg', $msg);
     }
 
     public function payment_history(){

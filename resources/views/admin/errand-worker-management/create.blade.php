@@ -34,7 +34,7 @@
                 @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
             <div class="mb-3">
-                <label  class="form-label">Căn cước công dân (update xác thực căn cước)</label>
+                <label  class="form-label">Căn cước công dân (chưa xác thực căn cước)</label>
                 <input type="text" class="form-control @error('identification_card') is-invalid @enderror" name="identification_card" value="{{ old('identification_card') }}">
                 @error('identification_card') <span class="text-danger">{{ $message }}</span> @enderror
             </div>

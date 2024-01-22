@@ -18,10 +18,23 @@ class ErrandWorkerController extends Controller
             'address' => 'required',
             'phone' => 'required|min:10|max:11',
             'identification' => 'required|digits:12',
-            'password' => 'required|min:6|max:15',
+            'password' => 'required|min:6',
             'cpassword' => 'required|same:password',
         ],[
-            'cpassword.same' => 'The confirm password and password must match'
+            'name.required' => 'Họ và tên buộc phải nhập',
+            'email.required' => 'Email không được bỏ trống',
+            'email.email' => 'Vui lòng nhập đúng định dạng email',
+            'email.unique' => 'Email đã tồn tại trong hệ thống',
+            'address.required' => 'Vui lòng nhập địa chỉ',
+            'phone.required' => 'Vui lòng nhập số điện thoại',
+            'phone.min' => 'Vui lòng nhập đúng độ dài số điện thoại',
+            'phone.max' => 'Vui lòng nhập đúng độ dài số điện thoại',
+            'identification.required' => 'Vui lòng nhập số căn cước công dân',
+            'identification.digits' => 'Vui lòng nhập đúng độ dài căn cước',
+            'password.required' => 'Vui lòng nhập mật khẩu',
+            'password.min' => 'Nhập lớn hơn :min ký tự',
+            'cpassword.same' => 'Mật khẩu nhập lại không khớp',
+            'cpassword.required' => 'Không được bỏ trống xác nhận mật khẩu'
         ]);
 
         $errand_woker = new ErrandWorker();
@@ -33,9 +46,14 @@ class ErrandWorkerController extends Controller
         $errand_woker->password = Hash::make($request->password);
         $data = $errand_woker->save();
         if($data){
-            return back()->with('success', 'Errand Worker created successfully');
+            if(Auth::guard('errand_worker')->attempt(['email' => $request->email, 'password' => $request->password])){
+                return redirect()->route('errand_worker.dashboard');
+            }else{
+                return back()->with('error', 'Something went wrong');
+            }
+            return back()->with('success', 'Đăng ký thành công');
         }else{
-            return back()->with('error', 'Something went wrong');
+            return back()->with('error', 'Đã xảy ra lỗi vui lòng kiểm tra lại');
         }
     }
 
@@ -44,7 +62,7 @@ class ErrandWorkerController extends Controller
             return redirect()->route('errand_worker.dashboard');
             // return 'ddawng nhap ok';
         }else{
-            return back()->with('error', 'Something went wrong');
+            return back()->with('error', 'Vui lòng kiểm tra email hoặc mật khẩu');
         }
     }
 

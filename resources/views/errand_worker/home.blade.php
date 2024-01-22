@@ -64,7 +64,7 @@
                     <div class="col-6">
                         <label  class="form-label">Xem lịch sử thuê</label>
                         <br>
-                        <a href="#" class="btn btn-primary">Xem</a>
+                        <a href="{{ route('errand_worker.job.rental_history') }}" class="btn btn-primary">Xem</a>
                     </div>
                 </div>
             </div>

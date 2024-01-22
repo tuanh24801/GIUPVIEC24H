@@ -30,7 +30,7 @@
                         <i class="fa-solid fa-bell fa-fw me-3" style="color: rgb(156, 156, 156);"></i><span
                             class="text-dark text-item-list-dworker">Thông báo</span>
                             <!-- <i class="fa-solid fa-bell"></i> -->
-                        <span class="badge rounded-pill badge-notification bg-danger fs-5" style="float: right;">2</span>
+                        {{-- <span class="badge rounded-pill badge-notification bg-danger fs-5" style="float: right;">2</span> --}}
                     </a>
                     <a href="#" class="text-dark item-list-dworker p-3 mt-3" aria-current="true">
                         <i class="fa-solid fa-money-bill-1 fa-fw me-3" style="color: rgb(156, 156, 156);"></i><span
@@ -70,7 +70,7 @@
                 <!-- Right links -->
                 <ul class="navbar-nav ms-auto d-flex flex-row align-items-center">
                     <!-- Avatar -->
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="" class="btn btn-success fw-bold">đã thực hiện: 1</a>
                     </li>
                     <li class="nav-item">
@@ -78,7 +78,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="" class="btn btn-success fw-bold mx-2">Số CV: 1</a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item dropdown me-4 d-flex align-item-center mx-3">
                         <a class="nav-link d-flex align-items-center " type="button"
                             id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">

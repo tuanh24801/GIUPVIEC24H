@@ -36,7 +36,7 @@ Route::middleware(['auth:customer'])->group(function(){
     Route::get('/rental_history',[App\Http\Controllers\Customer\JobController::class,'rental_history'])->name('customer.rental-history');
     Route::get('/rental_confirm/{rental_history_id}',[App\Http\Controllers\Customer\JobController::class,'rental_confirm'])->name('customer.rental-confirm');
 
-    Route::get('/customer/status_job/{rental_history_id}.{e_status}.{c_status}',[App\Http\Controllers\Customer\JobController::class,'status_job'])->name('customer.job.status_job');
+    Route::get('/customer/status_job/{rental_history_id}/{e_status}/{c_status}',[App\Http\Controllers\Customer\JobController::class,'status_job'])->name('customer.job.status_job');
 
     Route::get('/profile',[App\Http\Controllers\Customer\CustomerController::class,'profile'])->name('customer.profile');
     Route::post('/profile/update',[App\Http\Controllers\Customer\CustomerController::class,'update'])->name('customer.update');

@@ -28,7 +28,7 @@
                     </a>
                     <a href="{{ route('admin.errand_worker.index') }}" class="text-dark item-list-dworker p-3 mt-3" aria-current="true">
                         <i class="fas fa-tachometer-alt fa-fw me-3" style="color: rgb(156, 156, 156);"></i><span
-                            class="text-dark text-item-list-dworker">Quản lý người làm việc</span>
+                            class="text-dark text-item-list-dworker">Quản lý người nhận việc</span>
                     </a>
                     <a href="{{ route('admin.job.index') }}" class="text-dark item-list-dworker p-3 mt-3" aria-current="true">
                         <i class="fa-solid fa-bell fa-fw me-3" style="color: rgb(156, 156, 156);"></i><span

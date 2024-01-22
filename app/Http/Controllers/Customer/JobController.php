@@ -94,9 +94,7 @@ class JobController extends Controller
 
     public function status_job($rental_history_id, $e_status = '', $c_status){
         $rentalHistory = RentalHistory::find($rental_history_id);
-        if($e_status == ''){
-            $rentalHistory->errand_worker_status = $e_status;
-        }
+        $rentalHistory->errand_worker_status = $e_status;
         $rentalHistory->customer_status = $c_status;
         $rentalHistory->save();
         //xử lý nhận tiền

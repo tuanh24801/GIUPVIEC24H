@@ -3,9 +3,9 @@
     <style>
 
     </style>
-    <h1 class="text-dark">Danh sách người làm việc</h1>
+    <h1 class="text-dark">Danh sách người nhận việc</h1>
     <div class="admin-customer-option-list-customer d-flex justify-content-between">
-        <a href="{{ route('admin.errand_worker.add') }}" class="btn btn-success"><b>Thêm người làm việc</b></a>
+        <a href="{{ route('admin.errand_worker.add') }}" class="btn btn-success"><b>Thêm người nhận việc</b></a>
         <form action="" class="d-flex">
             <input type="text" class="form-control" name="s" value="@isset(request()->s) {{ request()->s }} @endisset" placeholder="Tìm kiếm người làm việc">
             <button type="submit" class="btn btn-primary mx-1"><i class="fa-solid fa-magnifying-glass"></i></button>

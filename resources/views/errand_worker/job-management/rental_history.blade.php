@@ -8,7 +8,7 @@ label{
 </style>
 @section('content')
 <div class="text-dark container" style="margin-bottom: 100px;">
-    <h3 class="mt-3">Lịch sử thuê người làm việc</h3>
+    <h3 class="mt-3">Lịch sử thuê người nhận việc</h3>
     @if (!empty(session('msg')))
         <div class="text-center">
             <p class="text-success fs-5">{{ session('msg') }}</p>

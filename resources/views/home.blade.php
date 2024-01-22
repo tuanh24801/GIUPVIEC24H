@@ -1,9 +1,8 @@
 @extends('layouts.main', $jobs = App\Models\Job::where('status', 1)->offset(0)->limit(3)->get())
 
 @section('content')
-
     <div class="title-list-dworker">
-        <h2 class="text-dark">Danh sách người làm việc</h2>
+        <h2 class="text-dark">Danh sách người nhận việc</h2>
     </div>
     <!-- Dánh sach người chạy việc -->
     <div class="row mt-4">
@@ -17,7 +16,6 @@
                             <p class="card-text text-dark">Số công việc đã làm: {{ $errand_worker->rental_histories->count() }}</p>
                             {{-- <p class="card-text text-dark">Số người nhận việc: {{ $job->errand_workers->count() }}</p> --}}
                             <a href="#" class="btn btn-primary">Xem chi tiết</a>
-
                         </div>
 
                     </div>
