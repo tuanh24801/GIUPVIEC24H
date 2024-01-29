@@ -59,7 +59,7 @@
                                         @enderror
                                     </span>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Đăng nhập</button>
 
                             </form>
                         </div>
