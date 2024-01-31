@@ -33,7 +33,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="">Vị trí</label>
-                        <input type="text" name="location" class="form-control" value="{{ old('location') }}">
+                        <input type="text" name="location" class="form-control" value="{{ old('location') }}" id="autocomplete">
                         @error('location') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-3">
@@ -85,5 +85,26 @@
             $('#total').html(total);
         })
     });
+
+    let autocomplete;
+        function initAutocomplete() {
+            autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('autocomplete'), {
+                types: ['address'],
+                componentRestrictions: { 'country': ['VN'] },
+                fields: ['name']
+            });
+            autocomplete.addListener('place_changed', onPlaceChanged);
+        }
+
+        function onPlaceChanged() {
+            var place = autocomplete.getPlace();
+            if (!place.geometry) {
+                document.getElementById('autocomplete').placeholder = 'abc';
+            } else {
+                document.getElementById('autocomplete').innerHTML = place.name;
+            }
+        }
+
 </script>
 @endsection
