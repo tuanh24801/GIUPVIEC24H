@@ -9,10 +9,10 @@
         color: black !important;
     }
     .pac-item{
-        background-color: #ecf0f1 !important;
+        background-color: #cdcfcf !important;
     }
     .pac-item:hover {
-        background-color: #dcdde1 !important;
+        background-color: #dde0e0 !important;
     }
 </style>
     <div class="title-list-dworker">
