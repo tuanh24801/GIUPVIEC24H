@@ -10,6 +10,8 @@ use App\Models\JobRental;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Customer;
 use App\Models\RentalHistory;
+use App\Models\EwIncome;
+use Carbon\Carbon;
 
 class JobController extends Controller
 {
@@ -89,15 +91,72 @@ class JobController extends Controller
 
     public function rental_history(){
         $customer = Customer::find(Auth::guard('customer')->user()->id);
+        $rentalHistories_1 =  $customer->rentalHistories->where('errand_worker_status','Đang chờ');
+        $date = new Carbon();
+        $date ->subMinutes(15);
+        foreach ($rentalHistories_1  as $rentalHistory) {
+            if($rentalHistory->created_at <= $date){
+                $rentalHistory->customer_status = "Hết thời gian chờ";
+                $rentalHistory->errand_worker_status = "Hết thời gian chờ";
+                $rentalHistory->save();
+                $customer->account_balance += $rentalHistory->total;
+                $customer->save();
+            }
+        }
+
+        $rentalHistories_2 =  $customer->rentalHistories->where('errand_worker_status','Hoàn thành');
+        $date = new Carbon();
+        $date->subDays(2);
+        foreach ($rentalHistories_2  as $rentalHistory) {
+            if($rentalHistory->created_at <= $date){
+                $rentalHistory->customer_status = "Hết thời gian chờ";
+                $rentalHistory->errand_worker_status = "Hết thời gian chờ";
+                $rentalHistory->save();
+                $customer->account_balance += $rentalHistory->total;
+                $customer->save();
+            }
+        }
+
         return view('customer.job.rental_history', ['customer' => $customer]);
     }
 
     public function status_job($rental_history_id, $e_status = '', $c_status){
+        $customer = Customer::find(Auth::guard('customer')->user()->id);
         $rentalHistory = RentalHistory::find($rental_history_id);
-        $rentalHistory->errand_worker_status = $e_status;
-        $rentalHistory->customer_status = $c_status;
-        $rentalHistory->save();
-        //xử lý nhận tiền
+        if($e_status == 'Hủy' || $c_status == 'Hủy'){
+            $date = new Carbon();
+            $date ->subMinutes(15);
+            if($rentalHistory->created_at <= $date){
+                return redirect()->back()->with('msg','Đã hết thời gian chờ');
+            }
+            if($rentalHistory->errand_worker_status == 'Đang chờ' ||  $rentalHistory->customer_status == 'Đang chờ'){
+                $rentalHistory->errand_worker_status = 'KH Đã hủy';
+                $rentalHistory->customer_status = 'KH Đã hủy';
+                $rentalHistory->save();
+                $customer->account_balance += $rentalHistory->total;
+                $customer->save();
+                return redirect()->back();
+            }
+        }
+        if($e_status == 'Hoàn thành' || $c_status == 'Đã xác nhận'){
+            $rentalHistory->errand_worker_status = $e_status;
+            $rentalHistory->customer_status = $c_status;
+            $rentalHistory->save();
+
+            $errand_worker_id = $rentalHistory->job_rental->errand_workers->id;
+
+            $errand_worker = ErrandWorker::find($errand_worker_id);
+            $errand_worker->account_balance  += $rentalHistory->total;
+            $errand_worker->save();
+
+            $ew_income = new EwIncome();
+            $ew_income->amount_in = $rentalHistory->total;
+            $ew_income->note = 'hoan thanh '.$rentalHistory->id;
+            $ew_income->errand_worker_id = $errand_worker->id;
+            $ew_income->save();
+            return redirect()->back()->with('msg', 'Đã xác nhận hoàn thành công việc');
+        }
+
         return redirect()->back();
     }
 }

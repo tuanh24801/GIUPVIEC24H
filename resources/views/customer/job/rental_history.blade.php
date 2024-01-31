@@ -23,7 +23,7 @@ label{
         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false"><b class="text-dark">Đang thực hiện ({{ $customer->rentalHistories->where('errand_worker_status','Đang thực hiện')->count(); }})</b></button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"><b class="text-danger">Từ chối ({{ $customer->rentalHistories->where('errand_worker_status', '=' ,'KH Đã hủy')->count() + $customer->rentalHistories->where('errand_worker_status', '=' ,'NTH Đã hủy')->count(); }})</b></button>
+        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"><b class="text-danger">Từ chối ({{ $customer->rentalHistories->where('errand_worker_status', '=' ,'KH Đã hủy')->count() + $customer->rentalHistories->where('errand_worker_status', '=' ,'NTH Đã hủy')->count() + $customer->rentalHistories->where('errand_worker_status', '=' ,'Hết thời gian chờ')->count(); }})</b></button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false"><b class="text-success">Hoàn thành ({{ $customer->rentalHistories->where('errand_worker_status','Hoàn thành')->count(); }})</b></button>
@@ -59,7 +59,7 @@ label{
                                 <td>{{ $rentalHistory->created_at }}</td>
                                 <td>{{ $rentalHistory->updated_at }}</td>
                                 <td>
-                                    <a href="{{ route('customer.job.status_job', ['rental_history_id' => $rentalHistory->id, 'e_status' => 'KH Đã hủy', 'c_status' => 'KH Đã hủy']) }}">Hủy</a>
+                                    <a href="{{ route('customer.job.status_job', ['rental_history_id' => $rentalHistory->id, 'e_status' => 'Hủy', 'c_status' => 'Hủy']) }}">Hủy</a>
                                 </td>
 
                             </tr>
@@ -139,6 +139,24 @@ label{
                         $rentalHistories_31 = !empty($rentalHistories_31) ? $rentalHistories_31 : [];
                     @endphp
                     @foreach ($rentalHistories_31 as $rentalHistory)
+                            <tr>
+                                <th scope="row">{{ $rentalHistory->id }}</th>
+                                <td>{{ $rentalHistory->job_rental->jobs->name }}</td>
+                                <td>{{ $rentalHistory->job_rental->errand_workers->name }}</td>
+                                <td>{{ Magarrent\LaravelCurrencyFormatter\Facades\Currency::currency("VND")->format($rentalHistory->total) }}</td>
+                                <td>{{ $rentalHistory->errand_worker_status }}</td>
+                                <td> <a href="">xem</a></td>
+                                <td>{{ $rentalHistory->created_at }}</td>
+                                <td>{{ $rentalHistory->updated_at }}</td>
+
+                            </tr>
+                    @endforeach
+
+                    @php
+                        $rentalHistories_32 =  $customer->rentalHistories->where('errand_worker_status','LIKE' ,'Hết thời gian chờ');
+                        $rentalHistories_32 = !empty($rentalHistories_32) ? $rentalHistories_32 : [];
+                    @endphp
+                    @foreach ($rentalHistories_32 as $rentalHistory)
                             <tr>
                                 <th scope="row">{{ $rentalHistory->id }}</th>
                                 <td>{{ $rentalHistory->job_rental->jobs->name }}</td>

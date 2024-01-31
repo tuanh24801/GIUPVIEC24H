@@ -12,6 +12,7 @@ use App\Models\JobRental;
 use App\Models\RentalHistory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class JobController extends Controller
 {
@@ -140,12 +141,42 @@ class JobController extends Controller
 
     public function rental_history(){
         $errand_worker = ErrandWorker::find(Auth::guard('errand_worker')->user()->id);
-        // dd($errand_worker->rental_histories);
+        $rentalHistories_1 =  $errand_worker->rental_histories->where('errand_worker_status', 'LIKE','Đang chờ');
+        $date = new Carbon();
+        $date ->subMinutes(15);
+        foreach ($rentalHistories_1  as $rentalHistory) {
+            if($rentalHistory->created_at <= $date){
+                $rentalHistory->customer_status = "Hết thời gian chờ";
+                $rentalHistory->errand_worker_status = "Hết thời gian chờ";
+                $rentalHistory->save();
+
+                $customer = Customer::find($rentalHistory->customer->id);
+                $customer->account_balance += $rentalHistory->total;
+                $customer->save();
+                // dd("hết thời gian xử lý (đơn hàng quá 15p)");
+            }
+        }
         return view('errand_worker.job-management.rental_history', ['errand_worker' => $errand_worker]);
     }
 
     public function status_job($rental_history_id, $e_status, $c_status){
         $rentalHistory = RentalHistory::find($rental_history_id);
+        $customer = Customer::find($rentalHistory->customer->id);
+        // if($e_status == 'Hủy' || $c_status == 'Hủy'){
+        //     $date = new Carbon();
+        //     $date ->subMinutes(15);
+        //     if($rentalHistory->created_at <= $date){
+        //         return redirect()->back()->with('msg','Đã hết thời gian chờ');
+        //     }
+        //     if($rentalHistory->errand_worker_status == 'Đang chờ' ||  $rentalHistory->customer_status == 'Đang chờ'){
+        //         $rentalHistory->errand_worker_status = 'NTH Đã hủy';
+        //         $rentalHistory->customer_status = 'NTH Đã hủy';
+        //         $rentalHistory->save();
+        //         $customer->account_balance += $rentalHistory->total;
+        //         $customer->save();
+        //         return redirect()->back();
+        //     }
+        // }
         $rentalHistory->errand_worker_status = $e_status;
         $rentalHistory->customer_status = $c_status;
         $rentalHistory->save();

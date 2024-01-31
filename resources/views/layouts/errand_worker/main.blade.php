@@ -11,16 +11,13 @@
 </head>
 
 <body>
-    <!--Main Navigation-->
     <header>
-        <!-- Sidebar -->
         <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse">
             <div class="position-sticky">
                 <div class="list-group list-group-flush list-option-dworker p-3">
                     <a href="{{ route('errand_worker.dashboard') }}" class="text-dark item-list-dworker p-3" aria-current="true">
                         <i class="fa-solid fa-user fa-fw me-3" style="color: rgb(156, 156, 156);"></i><span
                             class="text-dark text-item-list-dworker">Thông tin cá nhân</span>
-                            <!-- <i class="fa-solid fa-user"></i> -->
                     </a>
                     <a href="{{ route('errand_worker.job.index') }}" class="text-dark item-list-dworker p-3 mt-3" aria-current="true">
                         <i class="fas fa-tachometer-alt fa-fw me-3" style="color: rgb(156, 156, 156);"></i><span
@@ -28,14 +25,11 @@
                     </a>
                     <a href="{{ route('errand_worker.job.rental_history') }}" class="text-dark item-list-dworker p-3 mt-3" aria-current="true">
                         <i class="fa-solid fa-bell fa-fw me-3" style="color: rgb(156, 156, 156);"></i><span
-                            class="text-dark text-item-list-dworker">Thông báo</span>
-                            <!-- <i class="fa-solid fa-bell"></i> -->
-                        {{-- <span class="badge rounded-pill badge-notification bg-danger fs-5" style="float: right;">2</span> --}}
+                            class="text-dark text-item-list-dworker">Lịch sử thuê việc</span>
                     </a>
-                    <a href="#" class="text-dark item-list-dworker p-3 mt-3" aria-current="true">
+                    <a href="{{ route('errand_worker.ew_income') }}" class="text-dark item-list-dworker p-3 mt-3" aria-current="true">
                         <i class="fa-solid fa-money-bill-1 fa-fw me-3" style="color: rgb(156, 156, 156);"></i><span
                             class="text-dark text-item-list-dworker">Thu nhập</span>
-                            <!-- <i class="fa-solid fa-money-bill-1"></i> -->
                     </a>
                     <a href="{{ route('errand_worker.logout') }}" class="text-dark item-list-dworker p-3 mt-3" aria-current="true">
                         <i class="fa-solid fa-power-off fa-fw me-2" style="color: red;"></i>
@@ -44,19 +38,14 @@
                 </div>
             </div>
         </nav>
-        <!-- Sidebar -->
 
-        <!-- Navbar -->
         <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light fixed-top top-menu-main-navbar">
-            <!-- Container wrapper -->
             <div class="container-fluid dropdown">
-                <!-- Toggle button -->
                 <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu"
                     aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
                 </button>
 
-                <!-- Brand -->
                 <a class="navbar-brand mx-4" href="#">
                     <p class="">
                         <img src="{{ asset('./images/logo_viecvat.png') }}" height="45" alt="" /><br>
@@ -69,16 +58,7 @@
 
                 <!-- Right links -->
                 <ul class="navbar-nav ms-auto d-flex flex-row align-items-center">
-                    <!-- Avatar -->
-                    {{-- <li class="nav-item">
-                        <a href="" class="btn btn-success fw-bold">đã thực hiện: 1</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="btn btn-success fw-bold mx-2">Đang chờ: 1</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="btn btn-success fw-bold mx-2">Số CV: 1</a>
-                    </li> --}}
+
                     <li class="nav-item dropdown me-4 d-flex align-item-center mx-3">
                         <a class="nav-link d-flex align-items-center " type="button"
                             id="dropdownMenuButton1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -87,7 +67,7 @@
                                     <b>{{ Auth::guard('errand_worker')->user()->name }}</b>
                                 </li>
                                 <li class="info-cash-dworker" style="color:rgb(255, 200, 0);">
-                                    ${{ Auth::guard('errand_worker')->user()->account_balance }}
+                                    ${{ Magarrent\LaravelCurrencyFormatter\Facades\Currency::currency("VND")->format(Auth::guard('errand_worker')->user()->account_balance) }}
                                 </li>
                             </ul>
                             <img src="{{ asset('storage/images/errand_worker-images/'.Auth::guard('errand_worker')->user()->avatar) }}"
@@ -97,11 +77,8 @@
                 </ul>
 
             </div>
-            <!-- Container wrapper -->
         </nav>
-        <!-- Navbar -->
     </header>
-    <!--Main Navigation-->
 
     <!--Main layout-->
     <main style="margin-top: 120px;">

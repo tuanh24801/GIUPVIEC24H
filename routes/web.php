@@ -82,7 +82,11 @@ Route::prefix('errand_worker')->name('errand_worker.')->group(function(){
             Route::get('/rental_history',[App\Http\Controllers\ErrandWorker\JobController::class,'rental_history'])->name('rental_history');
 
             Route::get('/status_job/{rental_history_id}.{e_status}.{c_status}',[App\Http\Controllers\ErrandWorker\JobController::class,'status_job'])->name('status_job');
+
+
         });
+        //income
+        Route::get('/ew_income', [App\Http\Controllers\ErrandWorker\ErrandWorkerController::class,'ew_income'])->name('ew_income');
         Route::get('/logout',[ErrandWorkerController::class,'logout'])->name('logout');
     });
 });

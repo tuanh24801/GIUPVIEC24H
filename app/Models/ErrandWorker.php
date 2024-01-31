@@ -9,6 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Job;
+use App\Models\EwIncome;
 use App\Models\RentalHistory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -45,6 +46,10 @@ class ErrandWorker extends Authenticatable
 
     public function job_rentals(): HasMany{
         return $this->hasMany(JobRental::class, 'errand_worker_id');
+    }
+
+    public function ew_incomes(): HasMany{
+        return $this->hasMany(EwIncome::class, 'errand_worker_id');
     }
 
 

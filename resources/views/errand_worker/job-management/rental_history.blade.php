@@ -23,7 +23,7 @@ label{
             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false"><b class="text-dark">Đang thực hiện ({{ $errand_worker->rental_histories->where('errand_worker_status','Đang thực hiện')->count(); }})</b></button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"><b class="text-danger">Từ chối ({{ $errand_worker->rental_histories->where('errand_worker_status', '=' ,'KH Đã hủy')->count() + $errand_worker->rental_histories->where('errand_worker_status', '=' ,'NTH Đã hủy')->count(); }})</b></button>
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"><b class="text-danger">Từ chối ({{ $errand_worker->rental_histories->where('errand_worker_status', '=' ,'KH Đã hủy')->count() + $errand_worker->rental_histories->where('errand_worker_status', '=' ,'NTH Đã hủy')->count() + $errand_worker->rental_histories->where('errand_worker_status', '=' ,'Hết thời gian chờ')->count(); }})</b></button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false"><b class="text-success">Hoàn thành ({{ $errand_worker->rental_histories->where('errand_worker_status','Hoàn thành')->count(); }})</b></button>
@@ -170,6 +170,26 @@ label{
 
                             </tr>
                     @endforeach
+
+                    @php
+                        $rentalHistories_31 =  $errand_worker->rental_histories->where('customer_status', 'LIKE', 'Hết thời gian chờ');
+                        // dd($rentalHistories_3);
+                        $rentalHistories_31 = !empty($rentalHistories_31) ? $rentalHistories_31 : [];
+                    @endphp
+                    @foreach ($rentalHistories_31 as $rentalHistory)
+                            <tr>
+                                <th scope="row">{{ $rentalHistory->id }}</th>
+                                <td>{{ $rentalHistory->job_rental->jobs->name }}</td>
+                                <td>{{ $rentalHistory->customer->name }}</td>
+                                <td>{{ Magarrent\LaravelCurrencyFormatter\Facades\Currency::currency("VND")->format($rentalHistory->total) }}</td>
+                                <td>{{ $rentalHistory->customer_status }}</td>
+                                <td> <a href="">xem</a></td>
+                                <td>{{ $rentalHistory->created_at }}</td>
+                                <td>{{ $rentalHistory->updated_at }}</td>
+
+                            </tr>
+                    @endforeach
+
                 </tbody>
             </table>
         </div>

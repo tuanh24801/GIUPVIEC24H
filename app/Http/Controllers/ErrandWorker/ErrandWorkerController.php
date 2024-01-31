@@ -137,4 +137,9 @@ class ErrandWorkerController extends Controller
         $errand_worker->save();
         return redirect()->back()->with('msg','Cập nhật thông tin người làm việc thành công !');
     }
+
+    public function ew_income(){
+        $errand_worker = ErrandWorker::find(Auth::guard('errand_worker')->user()->id);
+        return view('errand_worker.income', ['errand_worker' => $errand_worker]);
+    }
 }
