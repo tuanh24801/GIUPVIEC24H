@@ -6,6 +6,7 @@
     <title>Trang chủ</title>
     <script src="https://kit.fontawesome.com/9e3f7a47c1.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChNNTJnl-Yy-ipzVszlROovhy9mPX9CEc&callback=initAutocomplete&libraries=places" async defer></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
@@ -15,6 +16,20 @@
         color: black;
         font-size: 15px;
     }
+
+    .pac-matched{
+        color: black !important;
+    }
+    .pac-item-query{
+        color: black !important;
+    }
+    .pac-item{
+        background-color: #cdcfcf !important;
+    }
+    .pac-item:hover {
+        background-color: #dde0e0 !important;
+    }
+
 </style>
 <body>
     <div class="header">

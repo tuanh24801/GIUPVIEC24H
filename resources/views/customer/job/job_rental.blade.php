@@ -121,7 +121,7 @@
         }
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChNNTJnl-Yy-ipzVszlROovhy9mPX9CEc&callback=initAutocomplete&libraries=places" async defer></script>
+
 
 
 @endsection
