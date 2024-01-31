@@ -5,6 +5,9 @@
     .pac-matched{
         color: black !important;
     }
+    .pac-item-query{
+        color: black !important;
+    }
 </style>
     <div class="title-list-dworker">
         <h2 class="text-dark">Chi tiết thuê</h2>
