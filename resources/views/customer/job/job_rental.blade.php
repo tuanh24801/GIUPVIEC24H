@@ -8,8 +8,8 @@
     .pac-item-query{
         color: black !important;
     }
-    .pac-item-selected{
-        color: black !important;
+    .pac-item{
+        background-color: rgb(196, 196, 196);
     }
 </style>
     <div class="title-list-dworker">
