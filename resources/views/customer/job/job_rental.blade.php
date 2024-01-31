@@ -1,6 +1,8 @@
 @extends('layouts.main', $jobs = App\Models\Job::where('status', 1)->offset(0)->limit(3)->get())
 
 @section('content')
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChNNTJnl-Yy-ipzVszlROovhy9mPX9CEc&callback=initAutocomplete&libraries=places" async defer></script>
     <div class="title-list-dworker">
         <h2 class="text-dark">Chi tiết thuê</h2>
     </div>
@@ -107,6 +109,5 @@
         }
 
 </script>
-<script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChNNTJnl-Yy-ipzVszlROovhy9mPX9CEc&callback=initAutocomplete&libraries=places" async defer></script>
+
 @endsection
