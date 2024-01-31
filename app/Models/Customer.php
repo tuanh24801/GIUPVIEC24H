@@ -19,7 +19,7 @@ class Customer extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $table = 'Customers';
+    protected $table = 'customers';
 
     protected $fillable = [
         'name',
