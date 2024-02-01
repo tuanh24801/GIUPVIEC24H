@@ -99,7 +99,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
     });
 
     Route::middleware(['auth:admin'])->group(function(){
-        Route::view('/','admin.dashboard')->name('dashboard');
+        // Route::view('/','admin.dashboard')->name('dashboard');
+        Route::get('/',[App\Http\Controllers\Admin\CustomerController::class,'index'])->name('index');
         Route::view('/dashboard','admin.dashboard')->name('dashboard');
         Route::get('/logout',[AdminController::class,'logout'])->name('logout');
 
@@ -133,10 +134,15 @@ Route::prefix('admin')->name('admin.')->group(function(){
             // Type Rental
             Route::get('/type_rentals',[App\Http\Controllers\Admin\JobController::class,'index_typeRentals'])->name('index_type_rentals');
             Route::post('/type_rentals/add',[App\Http\Controllers\Admin\JobController::class,'create_typeRentals'])->name('create_type_rental');
+
         });
 
         Route::prefix('payment')->name('payment.')->group(function (){
             Route::get('/',[App\Http\Controllers\Admin\PaymentController::class,'index'])->name('index');
+        });
+
+        Route::prefix('rental_history')->name('rental_history.')->group(function (){
+            Route::get('/',[App\Http\Controllers\Admin\RentalHistoryController::class,'index'])->name('index');
         });
 
     });
