@@ -11,7 +11,7 @@
         </div>
         <div class="col-6">
             <p class="text-dark" style="font-size: 25px;">{{ $job->name }}</p>
-            <p class="text-dark">Note: {{ $job->note }} </p>
+            <p class="text-dark">{{ $job->note }} </p>
         </div>
         <form action="">
 
