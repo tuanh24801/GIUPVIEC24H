@@ -45,11 +45,13 @@
                         <input type="number" name="amount" class="form-control" min="1" value="1" id="amount" value="{{ old('amount') }}">
                         @error('amount') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
+
                     <div class="mb-3">
                         <label for="">Vị trí</label>
                         <input type="text" name="location" class="form-control" value="{{ old('location') }}" id="autocomplete">
                         @error('location') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
+
                     <div class="mb-3">
                         <label for="">Ghi chú cho người thực hiện</label>
                         <div class="form-floating">
@@ -101,27 +103,27 @@
     });
 
     let autocomplete;
-        function initAutocomplete() {
-            autocomplete = new google.maps.places.Autocomplete(
-                document.getElementById('autocomplete'), {
-                types: ['address'],
-                componentRestrictions: { 'country': ['VN'] },
-                fields: ['name']
-            });
-            autocomplete.addListener('place_changed', onPlaceChanged);
-        }
+    function initAutocomplete() {
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('autocomplete'), {
+            types: ['address'],
+            componentRestrictions: { 'country': ['VN'] },
+            fields: ['name']
+        });
+        autocomplete.addListener('place_changed', onPlaceChanged);
+    }
 
-        function onPlaceChanged() {
-            var place = autocomplete.getPlace();
-            if (!place.geometry) {
-                document.getElementById('autocomplete').placeholder = 'Enter a location';
-            } else {
-                document.getElementById('autocomplete').innerHTML = place.name;
-            }
+    function onPlaceChanged() {
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            document.getElementById('autocomplete').placeholder = 'Enter a location';
+        } else {
+            document.getElementById('autocomplete').innerHTML = place.name;
         }
+    }
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChNNTJnl-Yy-ipzVszlROovhy9mPX9CEc&callback=initAutocomplete&libraries=places" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChNNTJnl-Yy-ipzVszlROovhy9mPX9CEc&callback=initAutocomplete&libraries=places,geometry" async defer></script>
 
 
 

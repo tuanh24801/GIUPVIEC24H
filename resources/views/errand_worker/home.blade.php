@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-6">
                         <label  class="form-label">Địa chỉ</label>
-                        <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') ?? Auth::guard('errand_worker')->user()->address }}">
+                        <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') ?? Auth::guard('errand_worker')->user()->address }}" id="autocomplete">
                         @error('address') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                 </div>
@@ -153,5 +153,27 @@
             });
         });
 
+        let autocomplete;
+    function initAutocomplete() {
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('autocomplete'), {
+            types: ['address'],
+            componentRestrictions: { 'country': ['VN'] },
+            fields: ['name']
+        });
+        autocomplete.addListener('place_changed', onPlaceChanged);
+    }
+
+    function onPlaceChanged() {
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            document.getElementById('autocomplete').placeholder = 'Enter a location';
+        } else {
+            document.getElementById('autocomplete').innerHTML = place.name;
+        }
+    }
+
     </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChNNTJnl-Yy-ipzVszlROovhy9mPX9CEc&callback=initAutocomplete&libraries=places,geometry" async defer></script>
+
 @endsection
