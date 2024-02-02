@@ -154,26 +154,26 @@
         });
 
         let autocomplete;
-    function initAutocomplete() {
-        autocomplete = new google.maps.places.Autocomplete(
-            document.getElementById('autocomplete'), {
-            types: ['address'],
-            componentRestrictions: { 'country': ['VN'] },
-            fields: ['name']
-        });
-        autocomplete.addListener('place_changed', onPlaceChanged);
-    }
-
-    function onPlaceChanged() {
-        var place = autocomplete.getPlace();
-        if (!place.geometry) {
-            document.getElementById('autocomplete').placeholder = 'Enter a location';
-        } else {
-            document.getElementById('autocomplete').innerHTML = place.name;
+        function initAutocomplete() {
+            autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('autocomplete'), {
+                types: ['address'],
+                componentRestrictions: { 'country': ['VN'] },
+                fields: ['name']
+            });
+            autocomplete.addListener('place_changed', onPlaceChanged);
         }
-    }
+
+        function onPlaceChanged() {
+            var place = autocomplete.getPlace();
+            if (!place.geometry) {
+                document.getElementById('autocomplete').placeholder = 'Enter a location';
+            } else {
+                document.getElementById('autocomplete').innerHTML = place.name;
+            }
+        }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChNNTJnl-Yy-ipzVszlROovhy9mPX9CEc&callback=initAutocomplete&libraries=places,geometry" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChNNTJnl-Yy-ipzVszlROovhy9mPX9CEc&callback=initAutocomplete&libraries=places,geometry" async defer></script>
 
 @endsection
